@@ -7,7 +7,7 @@ import { CoreService } from 'src/app/services/core.service';
   template: `
     <a href="/" class="logodark">
       <img
-        src="./assets/images/logos/dark-logo.svg"
+        src="./assets/images/svgs/vialapp-logo.png" width="140" height="70"
         class="align-middle m-2"
         alt="logo"
       />

@@ -1,40 +1,54 @@
+<div class="background-slider">
+  <div
+    class="bg-image"
+    *ngFor="let image of images; let i = index"
+    [ngStyle]="{
+      'background-image': 'url(' + image + ')',
+      'opacity': currentIndex === i ? 1 : 0
+    }"
+  ></div>
+</div>
+
 <div class="blank-layout-container justify-content-center align-items-center bg-light">
   <div class="position-relative row w-100 h-100 bg-gredient justify-content-center">
     <div class="col-lg-4 d-flex align-items-center">
       <mat-card class="cardWithShadow boxed-auth">
         <mat-card-content class="p-32">
           <div class="text-center">
-            <a [routerLink]="['/dashboard']">
-              <img src="./assets/images/logos/dark-logo.svg" class="align-middle m-2" alt="logo" />
-            </a><h1>Vial App</h1>
+              <img src="./assets/images/svgs/vialapp-logo.png" width="180" height="100" class="align-middle m-2" alt="logo" />
           </div>
 
 
           <div class="or-border m-t-30">Version 1.0.0</div>
 
-          <form class="m-t-30">
-            <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Usuario</mat-label>
+          <form  [formGroup]="formLogin" (ngSubmit)="submit()" class="m-t-30">
+            <mat-label  [ngClass]="{'is-invalid':hasErrors('usuario','required')}" class="f-s-14 f-w-600 m-b-12 d-block">Usuario</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput />
+              <input matInput  formControlName="usuario"/>
+              <mat-error *ngIf="hasErrors('usuario','required')">Usuario requerido</mat-error>
+
             </mat-form-field>
             <!-- password -->
             <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Contraseña</mat-label>
-            <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput type="password" />
+            <mat-form-field  [ngClass]="{'is-invalid':hasErrors('contraseña','required')}" appearance="outline" class="w-100" color="primary">
+              <input matInput type="password"  formControlName="contraseña"/>
+              <mat-error *ngIf="hasErrors('contraseña','required')">Contraseña requerido</mat-error>
             </mat-form-field>
+
 
             <div class="d-flex align-items-center m-b-12">
               <a [routerLink]="['/']" class="text-primary f-w-600 text-decoration-none m-l-auto f-s-14">Forgot Password
                 ?</a>
             </div>
-            <a [routerLink]="['/']" mat-flat-button color="primary" class="w-100">
+            <button [disabled]="!formLogin.valid" type="submit" mat-flat-button color="primary" class="w-100">
               Ingresar
-            </a>
+            </button>
             <!-- input -->
           </form>
-          <span class="d-block f-w-500 text-center m-t-24">New to Modernize?
-            <a [routerLink]="['/authentication/register']" class="text-decoration-none text-primary f-w-500 f-s-14">
-              Create an account</a>
+          <span class="d-block f-w-500 text-center m-t-24">Todo los derechos reservados © 2025</span>
+          <span class="d-block f-w-500 text-center m-t-8">
+            <a href="https://cosad25.com/" target="_blank" class="text-primary text-decoration-none">Cosad25</a>
+           
           </span>
         </mat-card-content>
       </mat-card>
