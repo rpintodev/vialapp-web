@@ -6,6 +6,7 @@ import {
 import {
   HttpClient,
   provideHttpClient,
+  withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { routes } from './app.routes';
@@ -29,6 +30,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 //Import all material modules
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { tokenHttpInterceptor } from './core/token-http-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,7 +43,7 @@ export const appConfig: ApplicationConfig = {
       }),
       withComponentInputBinding()
     ),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptors([tokenHttpInterceptor])),
     provideClientHydration(),
     provideAnimationsAsync(),
     importProvidersFrom(

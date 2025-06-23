@@ -6,17 +6,20 @@ import { AppMonthlyEarningsComponent } from 'src/app/components/monthly-earnings
 import { AppRecentTransactionsComponent } from 'src/app/components/recent-transactions/recent-transactions.component';
 import { AppProductPerformanceComponent } from 'src/app/components/product-performance/product-performance.component';
 import { AppBlogCardsComponent } from 'src/app/components/blog-card/blog-card.component';
-
+import { AppTopCardComponent } from 'src/app/components/top-cards/top-cards.component';
+import { BannerComponent } from 'src/app/components/banner/banner.component';
 
 @Component({
   selector: 'app-starter',
   imports: [
     MaterialModule,
+    AppTopCardComponent,
     AppSalesOverviewComponent,
     AppYearlyBreakupComponent,
     AppMonthlyEarningsComponent,
     AppRecentTransactionsComponent,
     AppProductPerformanceComponent,
+    BannerComponent,
     AppBlogCardsComponent
   ],
   templateUrl: './starter.component.html',

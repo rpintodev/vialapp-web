@@ -5,7 +5,7 @@
   <button mat-icon-button (click)="toggleMobileNav.emit()" class="d-flex d-lg-none justify-content-center">
     <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
   </button>
-
+  <mat-card-title class="mat-mdc-card-title">Bienvenido, {{usuarioSession.Nombre}} {{usuarioSession.Apellido}}</mat-card-title>
   <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Notifications">
     <i-tabler class="d-flex" name="bell" matBadge="1" matBadgeColor="primary"></i-tabler>
   </button>
@@ -39,7 +39,7 @@
     </button>
 
     <div class="p-x-12 m-t-12">
-      <a [routerLink]="['/authentication/login']" mat-stroked-button class="w-100">Logout</a>
+      <a [routerLink]="['/authentication/login']" (click)="logOut()" mat-stroked-button class="w-100">Logout</a>
     </div>
   </mat-menu>
 </mat-toolbar>

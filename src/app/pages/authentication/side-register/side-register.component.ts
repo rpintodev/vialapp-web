@@ -13,6 +13,7 @@ import { MaterialModule } from 'src/app/material.module';
 })
 export class AppSideRegisterComponent {
   options = this.settings.getOptions();
+  
 
   constructor(private settings: CoreService, private router: Router) {}
 

@@ -17,6 +17,7 @@ interface productCards {
     imports: [MatCardModule, TablerIconsModule, MatButtonModule],
     templateUrl: './blog-card.component.html',
 })
+
 export class AppBlogCardsComponent {
     constructor() { }
 

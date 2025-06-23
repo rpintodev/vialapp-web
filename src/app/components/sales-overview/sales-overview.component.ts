@@ -1,153 +1,122 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import { MaterialModule } from 'src/app/material.module';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 import {
-  ApexChart,
-  ChartComponent,
-  ApexDataLabels,
-  ApexLegend,
-  ApexStroke,
-  ApexTooltip,
-  ApexAxisChartSeries,
-  ApexXAxis,
-  ApexYAxis,
-  ApexGrid,
-  ApexPlotOptions,
-  ApexFill,
-  ApexMarkers,
-  ApexResponsive,
-  NgApexchartsModule,
+ApexAxisChartSeries,
+ApexChart,
+ChartComponent,
+ApexDataLabels,
+ApexYAxis,
+ApexLegend,
+ApexXAxis,
+ApexTooltip,
+ApexTheme,
+ApexGrid,
+ApexPlotOptions,
+ApexFill,
+NgApexchartsModule,
 } from 'ng-apexcharts';
-import { MatButtonModule } from '@angular/material/button';
+import { MaterialModule } from 'src/app/material.module';
 
-interface month {
-  value: string;
-  viewValue: string;
-}
-
-export interface salesOverviewChart {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  yaxis: ApexYAxis;
-  xaxis: ApexXAxis;
-  fill: ApexFill;
-  tooltip: ApexTooltip;
-  stroke: ApexStroke;
-  legend: ApexLegend;
-  grid: ApexGrid;
-  marker: ApexMarkers;
-}
+	export type ChartOptions = {
+    series: ApexAxisChartSeries;
+    chart: ApexChart;
+    xaxis: ApexXAxis;
+    yaxis: ApexYAxis;
+    stroke: any;
+    theme: ApexTheme;
+    tooltip: ApexTooltip;
+    dataLabels: ApexDataLabels;
+    legend: ApexLegend;
+    colors: string[];
+    markers: any;
+    grid: ApexGrid;
+    plotOptions: ApexPlotOptions;
+    fill: ApexFill;
+    labels: string[];
+  };
 
 @Component({
   selector: 'app-sales-overview',
-  imports: [MaterialModule, TablerIconsModule, NgApexchartsModule, MatButtonModule],
+imports: [
+  NgApexchartsModule, 
+  MaterialModule,
+  MatDatepickerModule,
+  MatButtonModule, 
+  MatIconModule,
+  MatFormFieldModule, 
+  MatInputModule],
   templateUrl: './sales-overview.component.html',
+  	providers: [provideNativeDateAdapter()],
 })
 export class AppSalesOverviewComponent {
 
-  @ViewChild('chart') chart: ChartComponent = Object.create(null);
-
-  public salesOverviewChart!: Partial<salesOverviewChart> | any;
-
-  months: month[] = [
-    { value: 'mar', viewValue: 'Sep 2025' },
-    { value: 'apr', viewValue: 'Oct 2025' },
-    { value: 'june', viewValue: 'Nov 2025' },
-  ];
-
-
-  constructor() {
-
-    // sales overview chart
-    this.salesOverviewChart = {
-      series: [
-        {
-          name: 'Eanings this month',
-          data: [355, 390, 300, 350, 390, 180, 355, 390],
-          color: '#5D87FF',
-        },
-        {
-          name: 'Expense this month',
-          data: [280, 250, 325, 215, 250, 310, 280, 250],
-          color: '#49BEFF',
-        },
-      ],
-
-      grid: {
-        borderColor: 'rgba(0,0,0,0.1)',
-        strokeDashArray: 3,
-        xaxis: {
-          lines: {
-            show: false,
-          },
-        },
-      },
-      plotOptions: {
-        bar: { horizontal: false, columnWidth: '35%', borderRadius: [4] },
-      },
-      chart: {
-        type: 'bar',
-        height: 390,
-        offsetX: -15,
-        toolbar: { show: false },
-        foreColor: '#adb0bb',
-        fontFamily: 'inherit',
-        sparkline: { enabled: false },
-      },
-      dataLabels: { enabled: false },
-      markers: { size: 0 },
-      legend: { show: false },
-      xaxis: {
-        type: 'category',
-        categories: [
-          '16/08',
-          '17/08',
-          '18/08',
-          '19/08',
-          '20/08',
-          '21/08',
-          '22/08',
-          '23/08',
-        ],
-        labels: {
-          style: { cssClass: 'grey--text lighten-2--text fill-color' },
-        },
-      },
-      yaxis: {
-        show: true,
-        min: 0,
-        max: 400,
-        tickAmount: 4,
-        labels: {
-          style: {
-            cssClass: 'grey--text lighten-2--text fill-color',
-          },
-        },
-      },
-      stroke: {
-        show: true,
-        width: 3,
-        lineCap: 'butt',
-        colors: ['transparent'],
-      },
-      tooltip: { theme: 'light' },
-
-      responsive: [
-        {
-          breakpoint: 600,
-          options: {
-            plotOptions: {
-              bar: {
-                borderRadius: 3,
-              },
-            },
-          },
-        },
-      ],
-    };
-
-  }
+@ViewChild('chart') chart: ChartComponent = Object.create(null);
+public areaChartOptions: Partial<ChartOptions> | any;
+constructor() {
+//Area chart.
+this.areaChartOptions = {
+series: [
+{
+name: 'Site A',
+data: [0, 300, 100, 200, 1200, 100, 500, 100],
+},
+{
+name: 'Site B',
+data: [0, 500, 600, 800, 2800, 900, 800, 2200],
+},
+],
+chart: {
+fontFamily: 'inherit',
+foreColor: '#a1aab2',
+height: 300,
+type: 'area',
+toolbar: {
+show: false,
+},
+},
+dataLabels: {
+enabled: false,
+},
+markers: {
+size: 3,
+},
+stroke: {
+curve: 'smooth',
+width: '2',
+},
+colors: ['#398bf7', '#06d79c'],
+legend: {
+show: false,
+},
+grid: {
+show: true,
+strokeDashArray: 0,
+borderColor: 'rgba(0,0,0,0.1)',
+xaxis: {
+lines: {
+show: true,
+},
+},
+yaxis: {
+lines: {
+show: true,
+},
+},
+},
+xaxis: {
+type: 'category',
+categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+},
+tooltip: {
+theme: 'dark',
+},
+};
+}
 }
