@@ -1,0 +1,36 @@
+<mat-card class="mat-mdc-card mdc-card cardWithShadow">
+  <mat-card-content class="mat-mdc-card-content">
+    <div class="row justify-content-between">
+
+        <div class="col-lg-9">
+            <div class="row justify-content ">
+                <div class="col-lg-4">
+                    <mat-form-field color="primary" appearance="outline" style="width:220px;">
+                            <mat-label>DD/MM/YYYY</mat-label>
+                            <input matInput [matDatepicker]="picker1" [value]="fechaSeleccionada" (dateChange)="onFechaChange($event)" />
+                            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <mat-form-field color="primary" appearance="outline" style="width:220px;">
+                        <mat-label>Cajero</mat-label>
+                        <mat-select [(value)]="selectedCajero">
+                            @for(option of selectedCajero; track option.value) {
+                                <mat-option [value]="option.name">
+                                    {{option.name}}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-lg-2">
+            <button mat-raised-button color="primary" class="mdc-button mat-mdc-button-base mdc-button--unelevated mat-mdc-unelevated-button mat-primary">Generar Reporte</button>
+        </div>
+    </div>
+  </mat-card-content>
+
+</mat-card>

@@ -1,0 +1,43 @@
+<div class="bg-light-success rounded p-y-20 p-x-24 m-b-30 overflow-hidden cardWithShadow ng-star-inserted">
+    <div class="row">
+        <div class="col-sm-10">
+            <h2 class="page-title m-0 f-s-20 f-w-600 m-b-16">
+                    @if(tipoReporte == 1) {
+                        Reporte de Bóveda
+                    } @else if(tipoReporte == 2) {
+                        Consolidado de Recaudación en Cabinas
+                    } @else if(tipoReporte == 3) {
+                        Reporte de Liquidación
+                    }
+            </h2>
+            <div class="d-flex align-items-center overflow-hidden">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item ng-start-inserted" tabindex="0">
+                        @if(tipoReporte == 1) {
+                        Detalle de denominaciones, aperturas, liquidaciones y retiros parciales
+                        } @else if(tipoReporte == 2) {
+                            Consolidado de Recaudación en Cabinas
+                        } @else if(tipoReporte == 3) {
+                             Recaudación en cabinas y detalle de denominaciones
+                        }
+                    
+                    </li>
+
+                </ul> 
+                
+            </div>
+          
+        </div>
+        <div class="col-sm-2 text-righ position-relative">
+            <div class="breadcrumb-icon">
+                 @if(tipoReporte == 1) {
+                <img src="/assets/images/backgrounds/boveda_report_banner.png" alt="breadcrumb" width="120" height="120" class="img-fluid">
+                        } @else if(tipoReporte == 2) {
+                <img src="/assets/images/backgrounds/consolidado_banner.png" alt="breadcrumb" width="120" height="120" class="img-fluid">
+                        } @else if(tipoReporte == 3) {
+                <img src="/assets/images/backgrounds/liquidacion_banner.png" alt="breadcrumb" width="120" height="120" class="img-fluid">
+                        }
+            </div>
+        </div>
+    </div>
+</div>

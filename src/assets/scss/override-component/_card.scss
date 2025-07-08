@@ -20,17 +20,19 @@
 html {
   .mat-mdc-card {
     margin-bottom: $card-spacer;
-
+    position: relative;
+    z-index: 1;
+    transform: translateZ(0); 
     .mat-mdc-card-header {
       padding: 16px $card-spacer !important;
     }
 
     .mat-mdc-card-header + .mat-mdc-card-content {
-      padding: 0 $card-spacer $card-spacer;
+      padding: 0 $card-spacer-custom $card-spacer-custom;
     }
 
     > .mat-mdc-card-content {
-      padding: $card-spacer !important;
+      padding: $card-spacer-custom !important;
     }
 
     .mdc-card__actions {

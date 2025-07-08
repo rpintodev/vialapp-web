@@ -1,35 +1,58 @@
 <div class="row">
     <div class="col-lg-12">
         <mat-card class="mat-mdc-card mdc-card cardWithShadow">
-            <mat-card-header style="padding: 12px;" class="mat-mdc-card-header p-b-6">
+            <mat-card-header  class="mat-mdc-card-header p-b-6" style="padding: 8px;">
                
-                <div class="d-flex w-50">
+                <div class="d-flex w-100">
                     <div><mat-card-title class="mat-mdc-card-title">Denominaciones en boveda</mat-card-title>
-                        <mat-card-subtitle class="mat-mdc-card-subtitle">Actualizado: 18/09/2025</mat-card-subtitle>
+                        <mat-card-subtitle class="mat-mdc-card-subtitle">Actualizado: </mat-card-subtitle>
                     </div>
                     <div class="m-l-auto">
                         	<mat-form-field color="accent" appearance="outline" class="w-100">
-                                <mat-label>Inherited calendar color</mat-label>
-                                    <input matInput [matDatepicker]="picker1" />
-                                    <mat-hint>MM/DD/YYYY</mat-hint>
-                                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-label>MM/DD/YYYY</mat-label>
+                                <input matInput [matDatepicker]="picker1" [value]="fechaSeleccionada" (dateChange)="onFechaChange($event)">
+                                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
                             </mat-form-field>
+
                           
                     </div>
                 </div>
+               
             </mat-card-header>
             <mat-card-content class="mat-mdc-card-content">
-                <div class="col-sm-10">
-
-                    <apx-chart [series]="areaChartOptions.series" [chart]="areaChartOptions.chart" [xaxis]="areaChartOptions.xaxis"
-                    [yaxis]="areaChartOptions.yaxis" [grid]="areaChartOptions.grid" [stroke]="areaChartOptions.stroke"
-                    [tooltip]="areaChartOptions.tooltip" [dataLabels]="areaChartOptions.dataLabels" [legend]="areaChartOptions.legend"
-                    [colors]="areaChartOptions.colors" [markers]="areaChartOptions.markers">
+                <div class="d-flex justify-content-between align-items-start flex-wrap">
+                    <!-- Gráfico -->
+                    <div class="chart-container" style="flex: 1 1 70%; min-width: 300px;">
+                    <apx-chart
+                        [series]="areaChartOptions.series"
+                        [chart]="areaChartOptions.chart"
+                        [xaxis]="areaChartOptions.xaxis"
+                        [yaxis]="areaChartOptions.yaxis"
+                        [grid]="areaChartOptions.grid"
+                        [stroke]="areaChartOptions.stroke"
+                        [tooltip]="areaChartOptions.tooltip"
+                        [dataLabels]="areaChartOptions.dataLabels"
+                        [legend]="areaChartOptions.legend"
+                        [colors]="areaChartOptions.colors"
+                        [markers]="areaChartOptions.markers">
                     </apx-chart>
-                </div>
-                <div class="col-sm-2">
-  
+                    </div>
+
+                    <!-- Total -->
+                    <div class="d-flex align-items-center justify-content-end p-3" style="flex: 0 0 auto;">
+                    <div>
+                        <h5 class="f-s-24 m-b-4">
+                        {{ultimaBoveda.total}}
+                        </h5>
+                        <span class="f-s-14">Total</span>
+                        <button mat-flat-button class="mdc-button mat-mdc-button-base w-100 m-t-32 mdc-button--unelevated mat-mdc-unelevated-button mat-unthemed" mat-ripple-loader-class-name="mat-mdc-button-ripple" (click)="getBoveda(fechaSeleccionada)">
+                        <span class="mdc-button__label">Actualizar</span>
+                        </button>
+                    </div>
+                    
+                    </div>
+                    
                 </div>
             </mat-card-content>
         </mat-card>

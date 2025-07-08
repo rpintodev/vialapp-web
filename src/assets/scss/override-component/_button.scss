@@ -28,6 +28,7 @@ html {
   .mat-mdc-button-base.bg-light-secondary:hover,
   .mat-mdc-button-base.bg-light-error:hover,
   .mat-mdc-button-base.bg-light-warning:hover,
+
   .mat-mdc-button-base.bg-light-success:hover {
     color: $white !important;
   }
@@ -55,6 +56,7 @@ html {
       background-color: $warning !important;
     }
   }
+
 
   .mat-mdc-button-base.bg-light-success {
     &:hover {

@@ -21,6 +21,13 @@ export const routes: Routes = [
           import('./pages/pages.routes').then((m) => m.PagesRoutes),
       },
       {
+        path: 'reports',
+        loadChildren: () =>
+          import('./pages/reports/reports.routes').then(
+            (m) => m.RerportsRoutes
+          ),
+      },
+      {
         path: 'ui-components',
         loadChildren: () =>
           import('./pages/ui-components/ui-components.routes').then(
@@ -47,6 +54,7 @@ export const routes: Routes = [
       },
     ],
   },
+ 
   {
     path: '**',
     redirectTo: 'authentication/error',

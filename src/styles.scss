@@ -5,3 +5,49 @@ body {
     height: 100%;
     margin: 0;
 }
+
+
+.transparent-dialog .mat-dialog-container {
+  background: rgba(0,0,0,0.1) !important; /* Fondo semitransparente para ver qué hay detrás */
+  box-shadow: none !important;
+}
+
+.custom-dialog-container {
+  position: relative !important;
+  z-index: 1000 !important;
+}
+
+.cdk-overlay-container {
+  z-index: 1000 !important;
+}
+
+.mat-dialog-container {
+  transform: none !important;
+}
+
+.custom-backdrop {
+  background-color: rgba(0,0,0,0.6);
+}
+.custom-transparent-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Estilo del panel del diálogo */
+.custom-dialog-panel .mat-dialog-container {
+  position: relative;
+  overflow: visible;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 
+              0 24px 38px 3px rgba(0,0,0,.14), 
+              0 9px 46px 8px rgba(0,0,0,.12);
+}
+
+/* Asegura que la tabla permanezca visible */
+mat-card.cardWithShadow {
+  transform: translateZ(0); /* Crea nuevo contexto de apilamiento */
+  position: relative;
+  z-index: 1;
+}
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

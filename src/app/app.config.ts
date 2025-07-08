@@ -9,6 +9,8 @@ import {
   withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+
+
 import { routes } from './app.routes';
 import {
   provideRouter,
@@ -53,5 +55,6 @@ export const appConfig: ApplicationConfig = {
       TablerIconsModule.pick(TablerIcons),
       NgScrollbarModule,
     ),
+   
   ],
 };
