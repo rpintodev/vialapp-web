@@ -7,7 +7,6 @@ import { FilterLiquidationReportComponent } from 'src/app/components/filter-card
   selector: 'app-boveda-report',
   imports: [BannerReportComponent, FilterLiquidationReportComponent],
   templateUrl: './boveda-report.component.html',
-  styleUrl: './boveda-report.component.scss'
 })
 export class BovedaReportComponent {
 

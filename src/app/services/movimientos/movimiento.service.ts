@@ -28,4 +28,22 @@ export class MovimientoService{
         return this.http.post<any[]>(`${this.apiUrl}/findByDateTipoMovimiento`,body);
     }
 
+    public getCajerosliquidadosByDate(fecha:string):Observable<any[]>{
+        const fechaInicio = new Date(fecha);
+        // Establecer hora a 5:00am
+        fechaInicio.setHours(0, 0, 0, 0);
+
+        const fechaFin = new Date(fechaInicio);
+        fechaFin.setDate(fechaFin.getDate() + 1); // Día siguiente
+        // Mantener hora a 5:00am
+        fechaFin.setHours(0, 0, 0, 0);// Incrementar un día
+        const body = {
+            fecha_inicio: fechaInicio,
+            fecha_fin: fechaFin,
+            id_peaje: this.usuarioSession.IdPeaje,
+        }
+        console.log("Cuerpo de la solicitud:", body);
+        return this.http.post<any[]>(`${this.apiUrl}/getCajerosliquidadosByDate`,body);
+    }
+
 }

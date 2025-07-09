@@ -7,47 +7,33 @@ body {
 }
 
 
-.transparent-dialog .mat-dialog-container {
-  background: rgba(0,0,0,0.1) !important; /* Fondo semitransparente para ver qué hay detrás */
-  box-shadow: none !important;
-}
+.icon-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s;
 
-.custom-dialog-container {
-  position: relative !important;
-  z-index: 1000 !important;
-}
+  &:hover {
+    background: rgba(0,0,0,0.05);
+  }
 
-.cdk-overlay-container {
-  z-index: 1000 !important;
+  i-tabler {
+    width: 20px;
+    height: 20px;
+    stroke: #555;
+  }
 }
-
-.mat-dialog-container {
-  transform: none !important;
-}
-
-.custom-backdrop {
-  background-color: rgba(0,0,0,0.6);
-}
-.custom-transparent-backdrop {
-  background-color: rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Estilo del panel del diálogo */
-.custom-dialog-panel .mat-dialog-container {
-  position: relative;
-  overflow: visible;
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 
-              0 24px 38px 3px rgba(0,0,0,.14), 
-              0 9px 46px 8px rgba(0,0,0,.12);
-}
-
-/* Asegura que la tabla permanezca visible */
-mat-card.cardWithShadow {
-  transform: translateZ(0); /* Crea nuevo contexto de apilamiento */
-  position: relative;
-  z-index: 1;
+.pdf-toolbar {
+  display: flex;
+  flex-direction: row; /* <-- HORIZONTAL */
+  align-items: center; /* Verticalmente centrados */
+  gap: 8px; /* Separación entre botones */
+  margin-bottom: 10px; /* Un poco de espacio debajo si quieres */
 }
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';

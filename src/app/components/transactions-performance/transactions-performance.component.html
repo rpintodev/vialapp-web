@@ -16,9 +16,9 @@
                 <div class="m-l-2">
                 <mat-form-field appearance="outline" style="width:220px;">
                     <mat-select placeholder="Tipos Movimiento"  [value]="tipomovimientoSeleccionado" (selectionChange)="setTipoMovimientoSeleccionado($event)">
-                    <mat-option *ngFor="let tipo of tipoMovimiento" [value]="tipo.id"  >
-                        {{ tipo.nombre }}
-                    </mat-option>
+                        <mat-option *ngFor="let tipo of tipoMovimiento" [value]="tipo.id"  >
+                            {{ tipo.nombre }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
                 </div>

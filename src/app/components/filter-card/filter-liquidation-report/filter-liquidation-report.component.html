@@ -14,13 +14,11 @@
                 </div>
                 <div class="col-lg-4">
                     <mat-form-field color="primary" appearance="outline" style="width:220px;">
-                        <mat-label>Cajero</mat-label>
-                        <mat-select [(value)]="selectedCajero">
-                            @for(option of selectedCajero; track option.value) {
-                                <mat-option [value]="option.name">
-                                    {{option.name}}
+                        <mat-select placeholder="Cajeros"  (value)="cajeroSeleccionado" (selectionChange)="setCajeroSeleccionado($event.value)">
+                                <mat-option  *ngFor="let cajero of selectedCajero" [value]="cajero.idturno">
+                                    {{cajero.nombreCajero}}
                                 </mat-option>
-                            }
+                            
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -28,7 +26,7 @@
         </div>
        
         <div class="col-lg-2">
-            <button mat-raised-button color="primary" class="mdc-button mat-mdc-button-base mdc-button--unelevated mat-mdc-unelevated-button mat-primary">Generar Reporte</button>
+            <button mat-raised-button color="success" class="mdc-button mat-mdc-button-base mdc-button--unelevated mat-mdc-unelevated-button mat-primary" (click)="generateReport()">Generar Reporte</button>
         </div>
     </div>
   </mat-card-content>
