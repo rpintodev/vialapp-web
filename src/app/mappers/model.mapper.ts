@@ -1,0 +1,46 @@
+import { IMovimiento } from "../models/movimiento";
+
+export class MovimientoMapper {
+  static fromDto(d: any): IMovimiento {
+    return {
+      id: d.Id,
+      idCajero: d.IdCajero,
+      idSupervisor: d.IdSupervisor,
+      idPeaje: d.IdPeaje,
+      idturno: d.IdTurno,
+      idTipoMovimiento: d.IdTipoMovimiento,
+      turno: d.Turno,
+      via: d.Via,
+      nombreMovimiento: d.NombreMovimiento,
+      nombreCajero: d.NombreCajero,
+      nombreSupervisor: d.NombreSupervisor,
+      firmacajero: d.FirmaCajero,
+      firmasupervisor: d.FirmaSupervisor,
+      fecha: d.Fecha,
+      recibe1c: d.Recibe_1c,
+      recibe5c: d.Recibe_5c,
+      recibe10c: d.Recibe_10c,
+      recibe25c: d.Recibe_25c,
+      recibe50c: d.Recibe_50c,
+      recibe1d: d.Recibe_1d,
+      recibe10d: d.Recibe_10d,
+      recibe5d: d.Recibe_5d,
+      recibe20d: d.Recibe_20d,
+      entrega1c: d.Entrega_1c,
+      entrega5c: d.Entrega_5c,
+      entrega10c: d.Entrega_10c,
+      entrega25c: d.Entrega_25c,
+      entrega50c: d.Entrega_50c,
+      entrega1d: d.Entrega_1d,
+      entrega10d: d.Entrega_10d,
+      entrega5d: d.Entrega_5d,
+      entrega20d: d.Entrega_20d,
+      simulaciones: d.Simulaciones,
+      sobrante: d.Sobrante,
+      partetrabajo: d.ParteTrabajo,
+      anulaciones: d.Anulaciones,
+      valoranulaciones: d.ValorAnulaciones,
+      valorsimulaciones: d.ValorSimulaciones,
+    };
+  }
+}

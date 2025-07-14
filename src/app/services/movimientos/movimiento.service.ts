@@ -46,4 +46,11 @@ export class MovimientoService{
         return this.http.post<any[]>(`${this.apiUrl}/getCajerosliquidadosByDate`,body);
     }
 
+    public getMovimientosByTurno(idTurno:string):Observable<any[]>{
+        const body = {
+            IdTurno: idTurno,
+        }
+        return this.http.post<any[]>(`${this.apiUrl}/findByTurno`,body);
+    }
+
 }

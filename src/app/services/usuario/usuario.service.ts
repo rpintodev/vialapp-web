@@ -9,5 +9,8 @@ import { Environment } from 'src/app/environment/environment';
 })
 export class UsuarioService {
 
+  constructor(private http: HttpClient){}
+
+
  
 }

@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import * as moment from 'moment';
+import { MovimientoMapper } from 'src/app/mappers/model.mapper';
 import { MaterialModule } from 'src/app/material.module';
 import { IMovimiento } from 'src/app/models/movimiento';
 import { MovimientoService } from 'src/app/services/movimientos/movimiento.service';
@@ -24,6 +25,7 @@ export class FilterLiquidationReportComponent implements OnInit {
     fechaSeleccionada: Date = new Date();
     selectedCajero:IMovimiento[];
     cajeroSeleccionado: string = '0'; // Valor por defecto para "Todos"
+    movimientos: IMovimiento[];
     @Output() pdfGenerated = new EventEmitter<string>();
 
   constructor(private movimientoService:MovimientoService) {}
@@ -44,7 +46,9 @@ export class FilterLiquidationReportComponent implements OnInit {
   }
 
   setCajeroSeleccionado(event: any) {
-    this.cajeroSeleccionado = event.value;
+
+    console.log('Id turno seleccionado:',event);
+    this.cajeroSeleccionado = event;
   }
 
   onFechaChange(event: any) {
@@ -55,20 +59,14 @@ export class FilterLiquidationReportComponent implements OnInit {
     this.getCajerosLiquidados(this.fechaSeleccionada);
   }
 
-  async generateReport() {
-    const products = [
-      { nombre: 'papas', cantidad: 3, total: 23.5 },
-      { nombre: 'huevos', cantidad: 2, total: 12.5 },
-      { nombre: 'pan', cantidad: 1, total: 5.0 },
-    ];
-
-    const pdfBlobUrl = await generatePDF(
-      products,
-      '12345',
-      new Date().toLocaleDateString()
-    );
-
-    this.pdfGenerated.emit(pdfBlobUrl);
+  async generateReport(idTurno:string) {
+    
+    this.movimientoService.getMovimientosByTurno(idTurno).subscribe( async response=>{
+      this.movimientos = response.map(MovimientoMapper.fromDto);
+      const pdfBlobUrl = await generatePDF(this.movimientos);
+      this.pdfGenerated.emit(pdfBlobUrl);
+    });
+    
   }
 
 }
