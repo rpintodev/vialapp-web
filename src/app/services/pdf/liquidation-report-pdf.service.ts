@@ -3,24 +3,14 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { IMovimiento } from "src/app/models/movimiento";
 import {logoBase64} from "src/assets/images/base64/images-base64"
 import { calcularTotalEntregado, calcularTotalRecibido, detalleRetiroParcial, formatCurrency, getBase64FromUrl, numberToWords, onlyDateFormated, onlyHourFormated } from "src/app/utils/movimientos-utils";
+import { buildAperturaTable, buildCanjeTable, liquidacionRows, styles } from "./utils/utils";
 // import { variable64 } from "../../assets/img";
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 
-const generatePDF = async (movimientos: IMovimiento[],): Promise <any> => {
+const generateLiquidationReport = async (movimientos: IMovimiento[],): Promise <any> => {
 
-  const styles = {
-    title: { fontSize: 10, bold: true,alignment: 'center' },
-    header: { fontSize: 16, bold: true,alignment: 'center' },
-    subheader: { fontSize: 12, margin: [0, 5, 0, 5],alignment: 'center'},
-    tableHeader: { fontSize: 8,bold: true, fillColor: '#bbdefb',alignment: 'center' },
-    tableSubHeader: { fontSize: 8,fillColor: '#e3f2fd',alignment: 'center' },
-    tableContent: {fontSize: 8,alignment: 'center'},
-    total: { bold: true, fontSize: 8, alignment: 'center' }, 
-    branchName: {fontSize: 10,italics: true},
-    valorEscrito: {fontSize: 10, alignment: 'left'},
-  };
 
   const apertura = movimientos.find((m)=> m.idTipoMovimiento =='1'); // Solo 1 movimiento ejemplo
   const retirosParciales = movimientos
@@ -41,9 +31,9 @@ const generatePDF = async (movimientos: IMovimiento[],): Promise <any> => {
   //TOTALES DE TRANSACCIONES
   const totalParciales = calcularTotalRecibido(retirosParciales);
   const totalLiquidacion: number = calcularTotalRecibido(liquidacion);
-  const totalApertura: number = calcularTotalRecibido(apertura);
   const totalRecaudado: number = totalLiquidacion+totalParciales;
   const totalFaltante: number = calcularTotalRecibido(faltante)-calcularTotalEntregado(faltante);
+  const totalApertura: number = calcularTotalRecibido(apertura);
 
 
   //Firmas
@@ -62,89 +52,14 @@ const generatePDF = async (movimientos: IMovimiento[],): Promise <any> => {
   { text: detalleRetiroParcial(retiro) || '', style: 'tableContent'}
   ]);
 
-  // Create liquidacion table rows
-  const liquidacionRows = [
-    [
-      { text: 'Moneda', style: 'tableContent' },
-      { text: '0,01 C', style: 'tableContent' },
-      { text: liquidacion?.recibe1c ?? '', style: 'tableContent'},
-      { text: (parseInt(liquidacion?.recibe1c ?? '0') * 0.01).toFixed(2), style: 'tableContent' },
-      { text: '', border: [false, false, false, false]},
-      { text: '', border: [false, false, false, false]},
-
-    ],
-    [
-      { text: 'Moneda', style: 'tableContent' },
-      { text: '0,05 C', style: 'tableContent' },
-      { text: liquidacion?.recibe5c ?? '', style: 'tableContent'},
-      { text: (parseInt(liquidacion?.recibe5c ?? '0') * 0.05).toFixed(2), style: 'tableContent'},
-      { text: '', border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
-    ],
-    [
-      { text: 'Moneda', style: 'tableContent' },
-      { text: '0,10 C', style: 'tableContent' },
-      { text: liquidacion?.recibe10c ?? '', style: 'tableContent' },
-      { text: (parseInt(liquidacion?.recibe10c ?? '0') * 0.1).toFixed(2), style: 'tableContent' },
-      { text: '', border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
-    ],
-    [
-      { text: 'Moneda', style: 'tableContent' },
-      { text: '0,25 C', style: 'tableContent' },
-      { text: liquidacion?.recibe25c ?? '', style: 'tableContent',},
-      { text: (parseInt(liquidacion?.recibe25c ?? '0') * 0.25).toFixed(2), style: 'tableContent'},
-      { text: '', border: [false, false, false, false]},
-      { text: '', border: [false, false, false, false] },
-    ],
-    [
-      { text: 'Moneda', style: 'tableContent' },
-      { text: '0,50 C', style: 'tableContent' },
-      { text: liquidacion?.recibe50c ?? '', style: 'tableContent', },
-      { text: (parseInt(liquidacion?.recibe50c ?? '0') * 0.5).toFixed(2), style: 'tableContent'},
-      { text: '', border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
-    ],
-    [
-      { text: 'Moneda', style: 'tableContent' },
-      { text: '$ 1', style: 'tableContent' },
-      { text: liquidacion?.recibe1d ?? '', style: 'tableContent' },
-      { text: (parseInt(liquidacion?.recibe1d ?? '0') * 1).toFixed(2), style: 'tableContent' },
-      { text: '',border: [false, false, false, false]},
-      { text: '', border: [false, false, false, false] },
-    ],
-    [
-      { text: 'Billete', style: 'tableContent' },
-      { text: '$ 5', style: 'tableContent' },
-      { text: liquidacion?.recibe5d ?? '', style: 'tableContent'},
-      { text: (parseInt(liquidacion?.recibe5d ?? '0') * 5).toFixed(2), style: 'tableContent'},
-      { text: '', border: [false, false, false, false]},
-      { text: '', border: [false, false, false, false] },
-    ],
-    [
-      { text: 'Billete', style: 'tableContent' },
-      { text: '$ 10', style: 'tableContent' },
-      { text: liquidacion?.recibe10d ?? '', style: 'tableContent' },
-      { text: (parseInt(liquidacion?.recibe10d ?? '0') * 10).toFixed(2), style: 'tableContent'},
-      { text: '',border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
-    ],
-    [
-      { text: 'Billete', style: 'tableContent' },
-      { text: '$ 20', style: 'tableContent' },
-      { text: liquidacion?.recibe20d ?? '', style: 'tableContent',},
-      { text: (parseInt(liquidacion?.recibe20d ?? '0') * 20).toFixed(2), style: 'tableContent' },
-      { text: '', border: [false, false, false, false]},
-      { text: '', border: [false, false, false, false] },
-    ]
-  ];
+  
 
   const canjeColumns  =[];
   const filasSiguientes = [];
 
   // !Create APertura table row
     const filaPrimera: any[] = [
-      buildAperturaTable(),
+      buildAperturaTable(apertura!),
         { text: '', border: [false, false, false, false] }
       ];
 
@@ -157,43 +72,6 @@ const generatePDF = async (movimientos: IMovimiento[],): Promise <any> => {
         filaPrimera.push({ text: '' });
       }
 
-    //funcion de fila de Apertura
-    function buildAperturaTable() {
-      return {
-        style: 'table',
-        table: {
-          widths: [100, 100],
-          body: [
-            [
-              { text: 'Detalle como se entrega la apertura', style: 'tableHeader' },
-              { text: 'Detalle como se recibe la apertura', style: 'tableHeader' }
-            ],
-            [
-              {
-                ul: [
-                  `$20x = ${apertura?.entrega20d || '0'}`,
-                  `$10x = ${apertura?.entrega10d || '0'}`,
-                  `$5x = ${apertura?.entrega5d || '0'}`,
-                  `$1x = ${apertura?.entrega1d || '0'}`,
-                ]
-              },
-              {
-                ul: [
-                  `$20x = ${apertura?.recibe20d || '0'}`,
-                  `$10x = ${apertura?.recibe10d || '0'}`,
-                  `$5x = ${apertura?.recibe5d || '0'}`,
-                  `$1x = ${apertura?.recibe1d || '0'}`,
-                ]
-              }
-            ],
-            [
-              { text: `Total: ${formatCurrency(totalApertura)}`, style: 'total' },
-              { text: `Total: ${formatCurrency(totalApertura)}`, style: 'total' }
-            ]
-          ]
-        }
-      };
-    }
     
 
     // 3) Otros canjes
@@ -227,45 +105,7 @@ const generatePDF = async (movimientos: IMovimiento[],): Promise <any> => {
       layout: 'noBorders'
     };
 
-    //funcion para generar tabla
-    function buildCanjeTable(canje:any) {
-        return {
-          style: 'table',
-          margin: [1, 0, 1, 0],
-          table: {
-            widths: [100, 100],
-            body: [
-              [
-                { text: 'Entrega de monedas y billetes en cabinas', style: 'tableHeader' },
-                { text: 'Recepción de monedas y billetes en cabinas', style: 'tableHeader' },
-                
-              ],
-              [
-                {
-                  ul: [
-                    `$20x = ${canje?.entrega20d || '0'}`,
-                    `$10x = ${canje?.entrega10d || '0'}`,
-                    `$5x = ${canje?.entrega5d || '0'}`,
-                    `$1x = ${canje?.entrega1d || '0'}`,
-                  ]
-                },
-                {
-                  ul: [
-                    `$20x = ${canje?.recibe20d || '0'}`,
-                    `$10x = ${canje?.recibe10d || '0'}`,
-                    `$5x = ${canje?.recibe5d || '0'}`,
-                    `$1x = ${canje?.recibe1d || '0'}`,
-                  ]
-                }
-              ],
-              [
-                { text: `Total: ${formatCurrency(calcularTotalEntregado(canje))}`, style: 'total' },
-                { text: `Total: ${formatCurrency(calcularTotalRecibido(canje))}`, style: 'total' }
-              ]
-            ]
-          }
-        };
-      }
+    
 
 
 
@@ -410,7 +250,7 @@ const generatePDF = async (movimientos: IMovimiento[],): Promise <any> => {
               { text: '', border: [false, false, false, false] },
               { text: '', border: [false, false, false, false] },
             ],
-            ...liquidacionRows,
+            ...liquidacionRows(liquidacion!),
             [
               { text: 'TOTAL DE LA ÚLTIMA ENTREGA DE VALORES (b)', style: 'tableSubHeader', colSpan: 3 },
               {},
@@ -605,4 +445,4 @@ const generatePDF = async (movimientos: IMovimiento[],): Promise <any> => {
   });
 };
 
-export default generatePDF;
+export default generateLiquidationReport;

@@ -6,5 +6,12 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <app-filter-liquidation-report></app-filter-liquidation-report>
+    <app-filter-consolidation-report (pdfGenerated)="pdfSrc = $event"> </app-filter-consolidation-report>
+  </div>
+  
+
+  
+  <div class="row">
+  <div class="col-lg-12">
+    <app-pdf-card [src]="pdfSrc" ></app-pdf-card>
   </div>

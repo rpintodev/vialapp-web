@@ -1,5 +1,11 @@
 import { IMovimiento } from "../models/movimiento";
 
+export function calcularFaltante(movimientos: any | any[]){
+        
+  return calcularTotalRecibido(movimientos)-calcularTotalEntregado(movimientos);
+
+};
+
 export function calcularTotalRecibido(movimientos: any | any[]): number {
   const denominaciones = [
     { campo: 'recibe1d', factor: 1 },

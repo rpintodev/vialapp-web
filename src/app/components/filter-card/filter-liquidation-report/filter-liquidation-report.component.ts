@@ -11,7 +11,7 @@ import { MovimientoMapper } from 'src/app/mappers/model.mapper';
 import { MaterialModule } from 'src/app/material.module';
 import { IMovimiento } from 'src/app/models/movimiento';
 import { MovimientoService } from 'src/app/services/movimientos/movimiento.service';
-import generatePDF from 'src/app/services/pdf/liquidation-report-pdf.service';
+import generateLiquidationReport from 'src/app/services/pdf/liquidation-report-pdf.service';
 
 @Component({
   selector: 'app-filter-liquidation-report',
@@ -63,7 +63,7 @@ export class FilterLiquidationReportComponent implements OnInit {
     
     this.movimientoService.getMovimientosByTurno(idTurno).subscribe( async response=>{
       this.movimientos = response.map(MovimientoMapper.fromDto);
-      const pdfBlobUrl = await generatePDF(this.movimientos);
+      const pdfBlobUrl = await generateLiquidationReport(this.movimientos);
       this.pdfGenerated.emit(pdfBlobUrl);
     });
     

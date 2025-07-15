@@ -53,4 +53,15 @@ export class MovimientoService{
         return this.http.post<any[]>(`${this.apiUrl}/findByTurno`,body);
     }
 
+    public getMovimientosReporteRetiros(fecha:Date):Observable<any[]>{
+        const fechaInicio = new Date(fecha);
+        const fechaFin = new Date(fechaInicio);
+        const body = {
+            fecha_inicio: fechaInicio,
+            fecha_fin:fechaFin,
+            id_peaje: this.usuarioSession.IdPeaje,
+        }
+        
+        return this.http.post<any[]>(`${this.apiUrl}/getMovimientosReporteRetiros`,body)
+    }
 }
