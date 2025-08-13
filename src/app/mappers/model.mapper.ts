@@ -1,4 +1,7 @@
-import { IMovimiento } from "../models/movimiento";
+import { IMovimiento} from "../models/movimiento";
+import { IPeaje } from "../models/peaje";
+import {IRol} from "../models/rol";
+import { IUsuario } from "../models/usuario";
 
 export class MovimientoMapper {
   static fromDto(d: any): IMovimiento {
@@ -44,3 +47,75 @@ export class MovimientoMapper {
     };
   }
 }
+
+export class RolMapper {
+  static fromDto(d: any): IRol {
+    return {
+      id: d.Id,
+      nombre: d.Nombre,
+      ruta:d.Ruta
+      
+    };
+  }
+}
+
+
+export class PeajeMapper {
+  static fromDto(d: any): IPeaje {
+    return {
+      id: d.Id,
+      nombre: d.Nombre,  
+      
+    };
+  }
+}
+
+export class UsuarioMapper {
+  static fromDto(d: any): IUsuario {
+    return {
+      id: d.Id,
+      nombre: d.Nombre,
+      apellido: d.Apellido,
+      telefono: d.Telefono,
+      usuario: d.Usuario,
+      password: d.Password,
+      imagen:d.Imagen,
+      idRol:d.IdRol,
+      idTurno: d.IdTurno,
+      turno: d.Turno,
+      via: d.via,
+      firma: d.Firma,
+      nombreRol: d.NombreRol,
+      nombrePeaje: d.NombrePeaje,
+      idPeaje: d.IdPeaje,
+      estado: d.Estado,
+      grupo: d.Grupo,
+      ...d      
+    };
+  }
+  static toDto(d: any): IUsuario {
+    return {
+      Id: d.id,
+      Nombre: d.nombre,
+      Apellido: d.apellido,
+      Telefono: d.telefono,
+      Usuario: d.usuario,
+      Password: d.password,
+      Imagen:d.imagen,
+      IdRol:d.idRol,
+      IdTurno: d.idTurno,
+      Turno: d.turno,
+      Via: d.via,
+      Firma: d.firma,
+      NombreRol: d.nombreRol,
+      NombrePeaje: d.nombrePeaje,
+      IdPeaje: d.idPeaje,
+      Estado: d.estado,
+      Grupo: d.grupo,
+      ...d      
+    };
+  }
+}
+
+
+

@@ -6,6 +6,13 @@ body {
     margin: 0;
 }
 
+.breadcrumb-icon{
+  position: absolute;
+  top: -20px;
+  right: 19px;
+  text-align: right;
+  
+}
 
 .icon-button {
   border: none;
@@ -37,3 +44,4 @@ body {
 }
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+@import 'ngx-toastr/toastr'

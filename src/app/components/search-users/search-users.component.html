@@ -1,0 +1,26 @@
+<mat-card class="mat-mdc-card mdc-card cardWithShadow">
+  <mat-card-content class="mat-mdc-card-content">
+    <div class="row justify-content-between">
+
+        <div class="col-lg-9">
+            <div class="row justify-content">
+                <div class="col-lg-6">
+                    <mat-label class="f-w-600 m-b-8 d-block">Nombre</mat-label>
+                    <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput (keyup)="applyFilter($event)" type="text" placeholder="Buscar personal" />
+                        <i-tabler matSuffix name="search" class="icon-20"  style="margin-right: 8px; margin-bottom: 8px;"></i-tabler>
+
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+        </div>
+       
+        <div class="col-lg-2">
+            <button mat-flat-button color="success" class="mdc-button mat-mdc-button-base mdc-button--unelevated mat-mdc-unelevated-button mat-primary" style="margin-top: 20px;" (click)="OpenModal(usuario)"> Agregar usuario</button>
+        </div>
+    </div>
+  </mat-card-content>
+
+</mat-card>

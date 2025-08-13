@@ -1,20 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Environment } from 'src/app/environment/environment';
-import { IRol } from 'src/app/models/rol';
+import { IPeaje } from 'src/app/models/peaje';
 import { Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class RolService {
-  url=`${Environment.NODESERVER}api/roles`
+export class PeajeService {
+  url=`${Environment.NODESERVER}api/peaje`
   http=inject(HttpClient);
   constructor() { }
 
-  public getRoles():Observable<any[]>{
-    return this.http.get<any[]>(`${this.url}/getAll`)
+  public getPeajes():Observable<any[]>{
+    return this.http.get<any[]>(`${this.url}/getall`)
   }
 
   

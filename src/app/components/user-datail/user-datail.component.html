@@ -1,0 +1,117 @@
+<div class="modal-header text-black">
+  <h4 class="modal-title mb-0" id="modal-title">
+    <i-tabler ></i-tabler>Editar Perfil
+  </h4>
+  <button type="button" class="btn-close btn-close-white" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="formUserDetail" (ngSubmit)="submit()" class="row g-4">
+    <!-- imagen -->
+    <div class="col-md-12 text-center">
+        <img [src]="detalle?.Imagen || '/assets/images/profile/user-3.jpg'" alt="Avatar" class="rounded-circle img-thumbnail" width="100">
+        <div class="mt-2">
+        <input type="file" accept="image/*" class="form-control" name="imagen">
+        </div>
+    </div>
+    <!-- Nombre -->
+    <div class="col-md-6">
+        <label for="nombre" class="form-label fw-bold">Nombre</label>
+        <input matInput type="text" placeholder="Ingrese el nombre" class="form-control shadow-sm rounded"
+        id="nombre" name="nombre" formControlName="nombre">
+        <mat-error *ngIf="formUserDetail.get('nombre')?.hasError('required') && formUserDetail.get('nombre')?.touched">
+        Nombre requerido
+        </mat-error>
+    </div>
+
+    <!-- Apellido -->
+    <div class="col-md-6">
+        <label for="apellido" class="form-label fw-bold">Apellido</label>
+        <input matInput placeholder="Ingrese el apellido" type="text" appearance="outline" color="primary" class="form-control shadow-sm" 
+            id="apellido" name="apellido" formControlName="apellido">
+        <mat-error *ngIf="formUserDetail.get('apellido')?.hasError('required') && formUserDetail.get('apellido')?.touched">
+            Apellido requerido
+        </mat-error>
+    </div>
+    
+
+    <!-- Teléfono -->
+    <div class="col-md-6">
+        <label for="telefono" placeholder="Ingrese el telefono" class="form-label fw-bold">Teléfono</label>
+        <input type="text" placeholder="Ingrese el telefono" class="form-control shadow-sm" id="telefono" name="telefono"
+        formControlName="telefono">
+        <mat-error *ngIf="formUserDetail.get('telefono')?.hasError('required') && formUserDetail.get('telefono')?.touched">
+            Telefono requerido
+        </mat-error>
+        <mat-error *ngIf="formUserDetail.get('telefono')?.hasError('pattern') && formUserDetail.get('telefono')?.touched">
+            El telefono debe tener 10 digitos
+        </mat-error>
+    </div>
+
+    <!-- Rol -->
+    <div class="col-md-6">
+      <label for="rol" class="form-label fw-bold">Rol</label>
+      <select id="rol" name="rol" class="form-select shadow-sm" formControlName="rol" >
+        <option value="" disabled selected>Seleccione un rol</option>
+        <option *ngFor="let rol of roles" [value]="rol.id">{{ rol.nombre }}</option>
+      </select>
+    </div>
+
+    <!-- Grupo -->
+    <div class="col-md-6">
+      <label for="grupo" class="form-label fw-bold">Grupo</label>
+      <select id="grupo" name="grupo"  class="form-select shadow-sm" formControlName="grupo">
+        <option value="" disabled selected>Seleccione un grupo</option>
+        <option *ngFor="let grupo of grupos" [value]="grupo.Grupo">
+          Grupo {{ grupo.Grupo }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Peaje -->
+    <div class="col-md-6">
+      <label for="peaje" class="form-label fw-bold">Peaje</label>
+      <select id="peaje" name="peaje" required class="form-select shadow-sm"  formControlName="peaje">
+        <option value="" disabled selected>Seleccione un peaje</option>
+        <option *ngFor="let peaje of peajes" [value]="peaje.id">{{ peaje.nombre }}</option>
+      </select>
+    </div>
+
+    <!-- Usuario -->
+    <div class="col-md-6" *ngIf="isNewUser()">
+        <label for="usuario" class="form-label fw-bold">Usuario</label>
+        <input matInput placeholder="Ingrese el usuario" type="text" appearance="outline" color="primary" class="form-control shadow-sm" 
+            id="usuario" name="usuario" formControlName="usuario">
+        <mat-error *ngIf="formUserDetail.get('usuario')?.hasError('required') && formUserDetail.get('usuario')?.touched">
+            Usuario requerido
+        </mat-error>
+    </div>
+
+
+    <!-- Contraseña -->
+     <div class="col-md-6" *ngIf="isNewUser()">
+        <label for="password" class="form-label fw-bold">Contraseña</label>
+        <input matInpu placeholder="Ingrese la contraseña" type="password" class="form-control shadow-sm" id="password" name="password" formControlName="password">
+        <mat-error *ngIf="formUserDetail.get('password')?.hasError('required') && formUserDetail.get('password')?.touched">
+            Contraseña requerida
+        </mat-error>
+        
+    </div>
+    <div class="col-md-6" *ngIf="isNewUser()">
+        <label for="confirmPassword" class="form-label fw-bold">Confirmar Contraseña</label>
+        <input matInput type="password" placeholder="Ingrese nuevamente la contraseña"  class="form-control shadow-sm" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword">
+        <mat-error *ngIf="formUserDetail.hasError('mismatch') && formUserDetail.get('confirmPassword')?.touched">
+            Las contraseñas no coinciden
+        </mat-error>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">
+    <i class="bi bi-x-circle me-1"></i>Cancelar
+  </button>
+  <button type="button" class="btn btn-success" [disabled]="!formUserDetail.valid" (click)="validateForm()">
+    <i class="bi bi-check-circle me-1"></i>Guardar
+  </button>
+</div>

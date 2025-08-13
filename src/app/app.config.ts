@@ -21,6 +21,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideClientHydration } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 // icons
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -47,6 +49,12 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withInterceptors([tokenHttpInterceptor])),
     provideClientHydration(),
+    provideAnimations(), // required animations providers
+     provideToastr({
+      timeOut: 10000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),    
     provideAnimationsAsync(),
     importProvidersFrom(
       FormsModule,

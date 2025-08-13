@@ -1,0 +1,125 @@
+<mat-card class="cardWithShadow">
+    <mat-card-content>
+        <div class="d-flex">
+            <div class="m-r-auto">
+                <mat-card-title>Usuarios del sistema</mat-card-title>
+            </div>
+            <div class="d-flex">
+                <div class="m-l-auto">
+                    <mat-form-field color='primary' appearance="outline" style="width: 220px;">
+                        <mat-select placeholder="Roles" [value]="rolSeleccionado" (selectionChange)="setRolSeleccionado($event)">
+                            <mat-option *ngFor="let rol of roles" [value]="rol.id">
+                                {{ rol.nombre }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="w-100">
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 p-l-0">
+                        Nombre
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="p-l-0">
+                        <div class="d-flex align-items-center">
+                            <img src="/assets/images/profile/user-4.jpg" alt="users" width="48" class="rounded">
+                            <div class="m-l-16">
+                                <h6 class="f-s-14 f-w-600">{{element.Nombre}} {{element.Apellido}}</h6>
+                                <span class="f-s-12"></span>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>                
+                <!-- Symbol Column -->
+                 <ng-container matColumnDef="usuario">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+                        Usuario
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.Usuario }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rol">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+                        Rol
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+
+                        @if(element.IdRol == '1') {
+                        <span class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12">
+                            {{ element.NombreRol | titlecase }}
+                        </span>
+                        }
+
+                        @if(element.IdRol == '2') {
+                        <span class="bg-light-warning text-warning rounded f-w-600 p-6 p-y-4 f-s-12">
+                            {{ element.NombreRol | titlecase }}
+                        </span>
+                        }
+
+                        @if(element.IdRol == '3') {
+                        <span class="bg-light-error text-error rounded f-w-600 p-6 p-y-4 f-s-12">
+                            {{ element.NombreRol | titlecase }}
+                        </span>
+                        }
+                        @if(element.IdRol == '4') {
+                        <span class="bg-light-info text-info rounded f-w-600 p-6 p-y-4 f-s-12">
+                            {{ element.NombreRol | titlecase }}
+                        </span>
+                        }
+                        @if(element.IdRol == '5') {
+                        <span class="bg-light-error text-warning rounded f-w-600 p-6 p-y-4 f-s-12">
+                            {{ element.NombreRol | titlecase }}
+                        </span>
+                        }
+                        @if(element.IdRol == '6') {
+                        <span class="bg-light-warning text-error rounded f-w-600 p-6 p-y-4 f-s-12">
+                            {{ element.NombreRol | titlecase }}
+                        </span>
+                        }
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="telefono">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+                        Telefono
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.Telefono }}
+                    </td>
+                </ng-container>
+                 <ng-container matColumnDef="peaje">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+                        Peaje
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        @if(element.IdPeaje == '1') {
+                            Cóngoma
+                        }@else{
+                            Los Angeles
+                        }
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+                        Acciones
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="primary" aria-label="Editar" (click)="openUserDetail(element)">
+                            <i-tabler name="edit" class="icon-20"></i-tabler>
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator 
+             [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+               
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+
+</mat-card>

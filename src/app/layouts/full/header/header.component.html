@@ -5,7 +5,7 @@
   <button mat-icon-button (click)="toggleMobileNav.emit()" class="d-flex d-lg-none justify-content-center">
     <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
   </button>
-  <mat-card-title class="mat-mdc-card-title">Bienvenido, {{usuarioSession.Nombre}} {{usuarioSession.Apellido}}</mat-card-title>
+  <mat-card-title class="mat-mdc-card-title">Bienvenido, {{nombre}}</mat-card-title>
   <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Notifications">
     <i-tabler class="d-flex" name="bell" matBadge="1" matBadgeColor="primary"></i-tabler>
   </button>
@@ -13,7 +13,6 @@
     <button mat-menu-item>Item 1</button>
     <button mat-menu-item>Item 2</button>
   </mat-menu>
-
 
   <span class="flex-1-auto"></span>
 

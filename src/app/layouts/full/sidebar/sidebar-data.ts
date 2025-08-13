@@ -17,7 +17,7 @@ export const navItems: NavItem[] = [
   
   {
     displayName: 'Recaudacion vial',
-    iconName: 'file-invoice',
+    iconName: 'device-tablet-dollar',
     chip: true,
     route: '',
     children: [
@@ -32,10 +32,9 @@ export const navItems: NavItem[] = [
       {
         displayName: 'Usuarios',
         iconName: 'users-group',
-        external: true,
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route: '',
+        route: '/recaudacion-vial/usuarios',
       },
     ],
   },
@@ -46,7 +45,7 @@ export const navItems: NavItem[] = [
   
    {
     displayName: 'Reportes Recaudación',
-    iconName: 'file-invoice',
+    iconName: 'report-analytics',
     chip: true,
     route: '',
     children: [

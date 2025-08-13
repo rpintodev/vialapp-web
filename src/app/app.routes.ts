@@ -28,6 +28,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'recaudacion-vial',
+        loadChildren: () =>
+          import('./pages/recaudacion-vial/recaudacion-vial.routes').then(
+            (m) => m.RecaudacionVialRoutes
+          ),
+      },
+      {
         path: 'ui-components',
         loadChildren: () =>
           import('./pages/ui-components/ui-components.routes').then(

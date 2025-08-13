@@ -34,7 +34,7 @@ export class HeaderComponent {
   @Input() toggleChecked = false;
   @Output() toggleMobileNav = new EventEmitter<void>();
   usuarioSession:IUsuario=this.authService.userData;
-
+  nombre:string = `${this.usuarioSession.Nombre} ${this.usuarioSession.Apellido}`;
   
   logOut(){
     this.authService.logOut();

@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^19.0.0",
+    "@angular/animations": "^19.2.14",
     "@angular/cdk": "^19.0.0",
     "@angular/common": "^19.0.0",
     "@angular/compiler": "^19.0.0",
@@ -33,6 +33,7 @@
     "ng-apexcharts": "1.7.6",
     "ng2-pdf-viewer": "^10.4.0",
     "ngx-scrollbar": "^11.0.0",
+    "ngx-toastr": "^19.0.0",
     "pdfmake": "^0.2.8",
     "rxjs": "~7.5.0",
     "sass": "1.81.0",
