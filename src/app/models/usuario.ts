@@ -14,7 +14,8 @@ export interface IUsuario {
     NombreRol:     string;
     NombrePeaje:   string;
     IdPeaje:       number;
-    Estado:        number;
+    Estado:        string;
+    Fecha:          string;
     Grupo:         number;
     session_token: string;
 }

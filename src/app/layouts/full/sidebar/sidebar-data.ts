@@ -24,10 +24,9 @@ export const navItems: NavItem[] = [
       {
         displayName: 'Asignación',
         iconName: 'user-square',
-        external: true,
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route: '',
+        route: '/recaudacion-vial/asignacion',
       },
       {
         displayName: 'Usuarios',

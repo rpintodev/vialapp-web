@@ -41,5 +41,12 @@ export class UsuarioService {
     return this.http.get<any[]>(`${this.apiUrl}/getGrupos`);
   }
 
+  public getByEstadoTurno():Observable<any[]>{
+    const body = {
+      id_peaje: this.usuarioSession.IdPeaje,
+    };
+    return this.http.post<any[]>(`${this.apiUrl}/findAllInTurno`, body);
+  }
+
 
 }

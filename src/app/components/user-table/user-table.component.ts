@@ -25,7 +25,6 @@ import { IPeaje } from 'src/app/models/peaje';
     CommonModule,
     MatDialogModule,
     TablerIconsModule,
-
   
   ],
   templateUrl: './user-table.component.html',
@@ -50,7 +49,7 @@ export class UserTableComponent implements OnInit,OnChanges {
 
   applyFilter(idRol: number) {
      if (idRol === 0 ) {
-      this.dataSource.filter = this.userName.trim().toLocaleLowerCase();
+      this.dataSource.filter = this.userName.toLocaleLowerCase();
       } else {
         this.dataSource.data = this.usuarios.filter(u => u.IdRol == idRol);
       }
@@ -113,6 +112,10 @@ export class UserTableComponent implements OnInit,OnChanges {
   }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData() {
     this.getRoles();
     this.getGrupos();
     this.getPeajes();

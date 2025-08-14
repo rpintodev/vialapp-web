@@ -42,6 +42,23 @@ body {
   gap: 8px; /* Separación entre botones */
   margin-bottom: 10px; /* Un poco de espacio debajo si quieres */
 }
+
+.tab-header {
+  display: flex;
+  gap: 32px;
+}
+.tab-btn {
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.tab-btn.active {
+  border-bottom: 2px solid #398bf7;
+  color: #398bf7;
+}
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 @import 'ngx-toastr/toastr'

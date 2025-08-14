@@ -1,7 +1,7 @@
 import {Routes} from '@angular/router';
 
 import { UsuariosComponent } from './usuarios/usuarios.component'; 
-import { compareAsc } from 'date-fns';
+import { AsignacionComponent } from './asignacion/asignacion.component';
 
 export const RecaudacionVialRoutes: Routes =[
   {
@@ -11,6 +11,10 @@ export const RecaudacionVialRoutes: Routes =[
       {
         path: 'usuarios',
         component: UsuariosComponent,
+      },
+      {
+        path: 'asignacion',
+        component: AsignacionComponent,
       },
       
     ]
