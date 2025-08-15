@@ -41,4 +41,6 @@ export interface  IMovimiento {
   valorsimulaciones?: string;
   sobrante?: string;
   estado?: string;
+  totalRecibido?: string;
+  totalEntregado?: string;
 }

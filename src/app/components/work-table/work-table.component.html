@@ -70,6 +70,9 @@
                         <button mat-icon-button color="primary" aria-label="Editar">
                             <i-tabler name="edit" class="icon-20"></i-tabler>
                         </button>
+                        <button mat-icon-button color="primary" (click)="getTransacctions(element.IdTurno)" aria-label="Transacciones">
+                            <i-tabler name="transfer" class="icon-20"></i-tabler>
+                        </button>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

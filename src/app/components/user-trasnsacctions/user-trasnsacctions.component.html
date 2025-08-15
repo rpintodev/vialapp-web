@@ -1,0 +1,116 @@
+<div class="modal-header">
+  <h4 class="modal-title">Transacciones del turno</h4>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="transaction-cards">
+    <mat-card *ngFor="let trans of movimiento" 
+              class="transaction-card mb-3" 
+              [ngClass]="{
+                'bg-light-primary': trans.idTipoMovimiento === '1',
+                'bg-light-warning': trans.idTipoMovimiento === '2',
+                'bg-light-success': trans.idTipoMovimiento === '3',
+                'bg-light-info': trans.idTipoMovimiento === '4'
+              }">
+      
+      <!-- Cabecera de la tarjeta (siempre visible) -->
+      <mat-card-content class="d-flex align-items-center justify-content-between"
+                        (click)="toggleDetails(trans)"
+                        style="cursor: pointer;">
+        <div class="transaction-info">
+          <div class="d-flex align-items-center">
+            <div class="transaction-icon me-3">
+              <i-tabler [name]="getIconByType(trans.idTipoMovimiento||'')" 
+                       [ngClass]="{
+                         'text-primary': trans.idTipoMovimiento === '1',
+                         'text-warning': trans.idTipoMovimiento === '2',
+                         'text-success': trans.idTipoMovimiento === '3',
+                         'text-info': trans.idTipoMovimiento === '4'
+                       }"
+                       class="icon-24"></i-tabler>
+            </div>
+            <div>
+              <h6 class="mb-1">
+                {{ getTransactionType(trans.idTipoMovimiento||'') }}
+                <small class="text-muted ms-2">
+                  {{ trans.fecha | date:'short' }}
+                </small>
+              </h6>
+              <p class="mb-0 text-muted">
+                Monto: ${{ trans.totalRecibido | number:'1.2-2' }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <button mat-icon-button [ngClass]="{
+            'text-primary': trans.idTipoMovimiento === '1',
+            'text-warning': trans.idTipoMovimiento === '2',
+            'text-success': trans.idTipoMovimiento === '3',
+            'text-info': trans.idTipoMovimiento === '4'
+          }" (click)="$event.stopPropagation(); editTransaction(trans)">
+            <i-tabler name="edit" class="icon-20"></i-tabler>
+          </button>
+          <button mat-icon-button (click)="$event.stopPropagation(); toggleDetails(trans)">
+            <i-tabler [name]="trans.expanded ? 'chevron-up' : 'chevron-down'" class="icon-20"></i-tabler>
+          </button>
+        </div>
+      </mat-card-content>
+
+      <!-- Detalles expandibles -->
+      <div class="transaction-details" [@expandCollapse]="trans.expanded ? 'expanded' : 'collapsed'"
+           *ngIf="trans.expanded">
+        <mat-divider></mat-divider>
+        
+        <!-- Tabla de denominaciones -->
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <h6 class="mb-3">Recibido</h6>
+            <div class="denomination-grid">
+              <div class="denomination-item">
+                <span class="denomination-label">$1:</span>
+                <span class="denomination-value">{{ trans.recibe1d || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">$5:</span>
+                <span class="denomination-value">{{ trans.recibe5d || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">$10:</span>
+                <span class="denomination-value">{{ trans.recibe10d || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">$20:</span>
+                <span class="denomination-value">{{ trans.recibe20d || 0 }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <h6 class="mb-3">Entregado</h6>
+            <div class="denomination-grid">
+              <div class="denomination-item">
+                <span class="denomination-label">$1:</span>
+                <span class="denomination-value">{{ trans.entrega1d || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">$5:</span>
+                <span class="denomination-value">{{ trans.entrega5d || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">$10:</span>
+                <span class="denomination-value">{{ trans.entrega10d || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">$20:</span>
+                <span class="denomination-value">{{ trans.entrega20d || 0 }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

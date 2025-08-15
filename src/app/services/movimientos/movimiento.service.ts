@@ -1,67 +1,49 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Environment } from 'src/app/environment/environment';
-import { ITipoMovimiento } from 'src/app/models/tipoMovimiento';
 import { AuthService } from '../auth/auth.service';
-import { IUsuario } from 'src/app/models/usuario';
+import { MovimientoRequestFactory } from '../../factories/movimeinto-request.factory';
+import { MovimientoMapper } from 'src/app/mappers/model.mapper';
+import { IMovimiento } from 'src/app/models/movimiento';
 
 @Injectable({
   providedIn: 'root'
 })
+export class MovimientoService {
+  private readonly authService = inject(AuthService);
+  private readonly requestFactory = inject(MovimientoRequestFactory);
+  private readonly apiUrl = `${Environment.NODESERVER}api/movimientos`;
 
-export class MovimientoService{
-    authService = inject(AuthService);
-    usuarioSession:IUsuario=this.authService.userData;
-    constructor(private http:HttpClient) { }
-    private apiUrl=`${Environment.NODESERVER}api/movimientos`;
+  constructor(private http: HttpClient) {}
 
-    public getByDateAndTipoMovimiento(fecha:string, idTipoMovimiento:string):Observable<any[]>{
-        const fechaFin = new Date(fecha);
-        fechaFin.setDate(fechaFin.getDate() + 1); // Incrementar un día
-        const body = {
-            fecha_inicio: fecha,
-            fecha_fin: fechaFin,
-            id_tipomovimiento: idTipoMovimiento,
-            id_peaje: this.usuarioSession.IdPeaje,
-        }
-        return this.http.post<any[]>(`${this.apiUrl}/findByDateTipoMovimiento`,body);
-    }
+  private get userPeajeId(): string {
+    return this.authService.userData.IdPeaje;
+  }
 
-    public getCajerosliquidadosByDate(fecha:string):Observable<any[]>{
-        const fechaInicio = new Date(fecha);
-        // Establecer hora a 5:00am
-        fechaInicio.setHours(0, 0, 0, 0);
+  getByDateAndTipoMovimiento(fecha: string, idTipoMovimiento: string): Observable<any[]> {
+    const request = this.requestFactory.createByDateAndTipoRequest(fecha, idTipoMovimiento, this.userPeajeId);
+    return this.http.post<any[]>(`${this.apiUrl}/findByDateTipoMovimiento`, request);
+  }
 
-        const fechaFin = new Date(fechaInicio);
-        fechaFin.setDate(fechaFin.getDate() + 1); // Día siguiente
-        // Mantener hora a 5:00am
-        fechaFin.setHours(0, 0, 0, 0);// Incrementar un día
-        const body = {
-            fecha_inicio: fechaInicio,
-            fecha_fin: fechaFin,
-            id_peaje: this.usuarioSession.IdPeaje,
-        }
-        console.log("Cuerpo de la solicitud:", body);
-        return this.http.post<any[]>(`${this.apiUrl}/getCajerosliquidadosByDate`,body);
-    }
+  getCajerosliquidadosByDate(fecha: string): Observable<any[]> {
+    const request = this.requestFactory.createCajerosLiquidadosRequest(fecha, this.userPeajeId);
+    return this.http.post<any[]>(`${this.apiUrl}/getCajerosliquidadosByDate`, request);
+  }
 
-    public getMovimientosByTurno(idTurno:string):Observable<any[]>{
-        const body = {
-            IdTurno: idTurno,
-        }
-        return this.http.post<any[]>(`${this.apiUrl}/findByTurno`,body);
-    }
-
-    public getMovimientosReporteRetiros(fecha:Date):Observable<any[]>{
-        const fechaInicio = new Date(fecha);
-        const fechaFin = new Date(fechaInicio);
-        const body = {
-            fecha_inicio: fechaInicio,
-            fecha_fin:fechaFin,
-            id_peaje: this.usuarioSession.IdPeaje,
-        }
-        
-        return this.http.post<any[]>(`${this.apiUrl}/getMovimientosReporteRetiros`,body)
-    }
+  getMovimientosByTurno(idTurno: string): Observable<IMovimiento[]> {
+    const request = { IdTurno: idTurno };
+    return this.http.post<any[]>(`${this.apiUrl}/findByTurno`, request).pipe(
+      map((response) => response.map(MovimientoMapper.fromDto))
+    );
+  }
+  
+  getMovimientosReporteRetiros(fecha: Date): Observable<any[]> {
+    const request = {
+      fecha_inicio: fecha,
+      fecha_fin: fecha,
+      id_peaje: this.userPeajeId
+    };
+    return this.http.post<any[]>(`${this.apiUrl}/getMovimientosReporteRetiros`, request);
+  }
 }

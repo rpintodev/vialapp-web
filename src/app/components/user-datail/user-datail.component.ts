@@ -25,7 +25,6 @@ import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 })
 export class UserDatailComponent implements OnInit{
 
-  private modalService = inject(NgbModal);
   formUserDetail!: FormGroup;
   closeResult: WritableSignal<string>=signal('');
   usuario: any;

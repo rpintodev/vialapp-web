@@ -31,21 +31,24 @@ import { IPeaje } from 'src/app/models/peaje';
 })
 export class UserTableComponent implements OnInit,OnChanges {
   
-  displayedColumns: string[] = ['nombre', 'usuario', 'rol', 'telefono', 'peaje','acciones'];
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @Input() userName: string;
-  private modalService = inject(NgbModal);
-  dataSource = new MatTableDataSource<IUsuario>();  
-  rolSeleccionado: string='0';
-  roles: IRol[];
-  grupos: string[];
-  peajes: IPeaje[];
-  usuarios: IUsuario[];
   constructor(
     private rolService: RolService,
     private userService: UsuarioService,
     private peajeService: PeajeService,
   ){}
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @Input() userName: string;
+  
+  private modalService = inject(NgbModal);
+  dataSource = new MatTableDataSource<IUsuario>();  
+  displayedColumns: string[] = ['nombre', 'usuario', 'rol', 'telefono', 'peaje','acciones'];
+  rolSeleccionado: string='0';
+  roles: IRol[];
+  grupos: string[];
+  peajes: IPeaje[];
+  usuarios: IUsuario[];
+  
 
   applyFilter(idRol: number) {
      if (idRol === 0 ) {

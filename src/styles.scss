@@ -59,6 +59,75 @@ body {
   border-bottom: 2px solid #398bf7;
   color: #398bf7;
 }
+.icon-center {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.transaction-card {
+  transition: all 0.3s ease;
+}
+
+.transaction-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.bg-light-primary {
+  background-color: rgba(63,81,181,0.1) !important;
+}
+
+.bg-light-warning {
+  background-color: rgba(255,193,7,0.1) !important;
+}
+
+.bg-light-success {
+  background-color: rgba(76,175,80,0.1) !important;
+}
+
+.bg-light-info {
+  background-color: rgba(3,169,244,0.1) !important;
+}
+
+.transaction-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: white;
+}
+
+
+.transaction-details {
+  overflow: hidden;
+  padding: 0 16px;
+}
+
+.denomination-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.denomination-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 4px;
+}
+
+.denomination-label {
+  font-weight: 500;
+}
+
+.denomination-value {
+  font-family: monospace;
+}
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 @import 'ngx-toastr/toastr'
