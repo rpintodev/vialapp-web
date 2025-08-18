@@ -84,5 +84,10 @@ export const navItems: NavItem[] = [
     iconName: 'user-scan',
     route: '',
   },
+  {
+    displayName: 'App Settings',
+    iconName: 'settings',
+    route: '/settings',
+  },
   
 ];

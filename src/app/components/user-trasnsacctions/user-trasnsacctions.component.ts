@@ -32,6 +32,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class UserTrasnsacctionsComponent implements OnInit{
     @Input() movimiento: any[] = [];
+    showMoreDenominations = false;	
 
     constructor(public modal: NgbActiveModal) {}
 
@@ -69,7 +70,6 @@ export class UserTrasnsacctionsComponent implements OnInit{
   }
 
   ngOnInit() {
-    console.log(this.movimiento);
   }
 
 }

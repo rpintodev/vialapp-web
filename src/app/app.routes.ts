@@ -35,17 +35,15 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'ui-components',
+        path: 'settings',
         loadChildren: () =>
-          import('./pages/ui-components/ui-components.routes').then(
-            (m) => m.UiComponentsRoutes
+          import('./pages/settings/settings.routes').then(
+            (m) => m.SettingsRoutes
           ),
       },
-      {
-        path: 'extra',
-        loadChildren: () =>
-          import('./pages/extra/extra.routes').then((m) => m.ExtraRoutes),
-      },
+        
+      
+      
     ],
   },
   {

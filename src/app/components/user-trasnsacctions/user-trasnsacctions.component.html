@@ -38,21 +38,13 @@
                 </small>
               </h6>
               <p class="mb-0 text-muted">
-                Monto: ${{ trans.totalRecibido | number:'1.2-2' }}
+                Monto: ${{ (trans.idTipoMovimiento == '1' ? trans.totalEntregado : trans.totalRecibido) | number:'1.2-2' }}
               </p>
             </div>
           </div>
         </div>
 
         <div class="d-flex align-items-center">
-          <button mat-icon-button [ngClass]="{
-            'text-primary': trans.idTipoMovimiento === '1',
-            'text-warning': trans.idTipoMovimiento === '2',
-            'text-success': trans.idTipoMovimiento === '3',
-            'text-info': trans.idTipoMovimiento === '4'
-          }" (click)="$event.stopPropagation(); editTransaction(trans)">
-            <i-tabler name="edit" class="icon-20"></i-tabler>
-          </button>
           <button mat-icon-button (click)="$event.stopPropagation(); toggleDetails(trans)">
             <i-tabler [name]="trans.expanded ? 'chevron-up' : 'chevron-down'" class="icon-20"></i-tabler>
           </button>
@@ -70,23 +62,44 @@
             <h6 class="mb-3">Recibido</h6>
             <div class="denomination-grid">
               <div class="denomination-item">
-                <span class="denomination-label">$1:</span>
-                <span class="denomination-value">{{ trans.recibe1d || 0 }}</span>
+                <span class="denomination-label">$20:</span>
+                <span class="denomination-value">{{ trans.recibe20d || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                  <span class="denomination-label">$10:</span>
+                  <span class="denomination-value">{{ trans.recibe10d || 0 }}</span>
               </div>
               <div class="denomination-item">
                 <span class="denomination-label">$5:</span>
                 <span class="denomination-value">{{ trans.recibe5d || 0 }}</span>
               </div>
               <div class="denomination-item">
-                <span class="denomination-label">$10:</span>
-                <span class="denomination-value">{{ trans.recibe10d || 0 }}</span>
+                <span class="denomination-label">$1:</span>
+                <span class="denomination-value">{{ trans.recibe1d || 0 }}</span>
+              </div>
+              </div><br>
+              <div class="denomination-grid" *ngIf="showMoreDenominations">
+
+              <div class="denomination-item">
+                <span class="denomination-label">50c:</span>
+                <span class="denomination-value">{{ trans.recibe50c || 0 }}</span>
               </div>
               <div class="denomination-item">
-                <span class="denomination-label">$20:</span>
-                <span class="denomination-value">{{ trans.recibe20d || 0 }}</span>
+                <span class="denomination-label">25c:</span>
+                <span class="denomination-value">{{ trans.recibe25d || 0 }}</span>
               </div>
-            </div>
+              <div class="denomination-item">
+                <span class="denomination-label">10c:</span>
+                <span class="denomination-value">{{ trans.recibe10c || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">5c:</span>
+                <span class="denomination-value">{{ trans.recibe5 || 0 }}</span>
+              </div>
+
+            </div><br>
           </div>
+          
           
           <div class="col-md-6">
             <h6 class="mb-3">Entregado</h6>
@@ -107,7 +120,33 @@
                 <span class="denomination-label">$20:</span>
                 <span class="denomination-value">{{ trans.entrega20d || 0 }}</span>
               </div>
+            </div><br>
+            <div class="denomination-grid" *ngIf="showMoreDenominations">
+              <div class="denomination-item">
+                <span class="denomination-label">50c:</span>
+                <span class="denomination-value">{{ trans.entrega50c || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">25c:</span>
+                <span class="denomination-value">{{ trans.entrega25c || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">10c:</span>
+                <span class="denomination-value">{{ trans.entrega10c || 0 }}</span>
+              </div>
+              <div class="denomination-item">
+                <span class="denomination-label">5c:</span>
+                <span class="denomination-value">{{ trans.entrega5c || 0 }}</span>
+              </div>
             </div>
+          </div>
+          <!-- Botón Ver más / Ver menos -->
+          <div class="text-center">
+            <button
+              class="btn btn-outline-secondary"
+              (click)="showMoreDenominations = !showMoreDenominations">
+              {{ showMoreDenominations ? 'Ver menos' : 'Ver más denominaciones' }}
+            </button>
           </div>
         </div>
       </div>

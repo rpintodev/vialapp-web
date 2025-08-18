@@ -67,6 +67,7 @@ export class UserDatailComponent implements OnInit{
   const confirmPassword = group.get('confirmPassword')?.value;
   return password === confirmPassword ? null : { mismatch: true };
 };
+
   hasErrors(controlName: string, errorName: string){
     const control = this.formUserDetail.get(controlName);
     return control?.hasError(errorName) && control?.touched;

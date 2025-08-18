@@ -128,6 +128,31 @@ body {
 .denomination-value {
   font-family: monospace;
 }
+
+/* Añade estos estilos en tu archivo de componente o en styles.scss */
+.mat-mdc-table {
+  width: 100%;
+}
+
+/* Centrar contenido de celdas */
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+/* Ajustar padding de celdas */
+.mat-mdc-cell {
+  padding: 16px 8px !important;
+}
+
+/* Centrar contenido de spans y botones */
+.mat-mdc-cell span,
+.mat-mdc-cell button {
+  margin: 0 auto;
+}
+
+
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 @import 'ngx-toastr/toastr'

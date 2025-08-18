@@ -11,6 +11,7 @@
       </span>
       </div>
     </div>
+    <!-- Centrar los elementos de la tabla-->
     <div class="table-responsive">
             <table mat-table [dataSource]="dataSource" class="w-100">
                 <ng-container matColumnDef="nombre">
@@ -66,13 +67,12 @@
                     <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
                         Acciones
                     </th>
-                    <td mat-cell *matCellDef="let element">
-                        <button mat-icon-button color="primary" aria-label="Editar">
-                            <i-tabler name="edit" class="icon-20"></i-tabler>
-                        </button>
-                        <button mat-icon-button color="primary" (click)="getTransacctions(element.IdTurno)" aria-label="Transacciones">
-                            <i-tabler name="transfer" class="icon-20"></i-tabler>
-                        </button>
+                    <td mat-cell *matCellDef="let element" class="p-0">
+                        <div class="d-flex flex-sm-row flex-col align-items-center justify-content-center gap-8">
+                            <button mat-mini-fab class="bg-primary text-white" (click)="getTransacctions(element.IdTurno)" aria-label="Example icon button with a delete icon">
+                                <i-tabler class="icon-20 d-flex" name="transfer"></i-tabler>
+                            </button>
+                        </div>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

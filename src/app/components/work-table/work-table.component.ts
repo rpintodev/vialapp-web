@@ -15,6 +15,8 @@ import { IMovimiento } from 'src/app/models/movimiento';
 import { UserTrasnsacctionsComponent } from '../user-trasnsacctions/user-trasnsacctions.component';
 import { MovimientoService } from 'src/app/services/movimientos/movimiento.service';
 import { calcularTotalRecibido,calcularTotalEntregado } from 'src/app/utils/movimientos-utils';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-work-table',
@@ -24,6 +26,8 @@ import { calcularTotalRecibido,calcularTotalEntregado } from 'src/app/utils/movi
     MaterialModule,
     CommonModule,
     MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
     TablerIconsModule,
   ],
   templateUrl: './work-table.component.html',

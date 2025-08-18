@@ -62,8 +62,7 @@ export class FilterLiquidationReportComponent implements OnInit {
   async generateReport(idTurno:string) {
     
     this.movimientoService.getMovimientosByTurno(idTurno).subscribe( async response=>{
-      this.movimientos = response.map(MovimientoMapper.fromDto);
-      const pdfBlobUrl = await generateLiquidationReport(this.movimientos);
+      const pdfBlobUrl = await generateLiquidationReport(response);
       this.pdfGenerated.emit(pdfBlobUrl);
     });
     
