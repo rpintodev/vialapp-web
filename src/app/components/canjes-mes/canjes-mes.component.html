@@ -1,0 +1,95 @@
+<mat-card class="cardWithShadow">
+      <mat-card-content>
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h6 class="mb-1">Último Canje al Banco</h6>
+            <small class="text-muted">{{fechaUltimoCanje}}</small>
+          </div>
+          <div class="bg-light-success rounded p-2">
+            <i-tabler name="building-bank" class="icon-20 text-success"></i-tabler>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <h3 class="mb-0 text-success">\${{montoTotal | number:'1.2-2'}}</h3>
+          <small class="text-muted">Monto total canjeado</small>
+        </div>
+
+        <div class="row g-2">
+          <div class="col-4">
+            <div class="text-center p-2 bg-light rounded">
+              <div class="d-flex align-items-center justify-content-center mb-1">
+                <i-tabler name="cash" class="icon-16 text-primary me-1"></i-tabler>
+                <small class="fw-bold">$10</small>
+              </div>
+              <span class="small text-muted">{{denominaciones.billete10}} und</span>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-center p-2 bg-light rounded">
+              <div class="d-flex align-items-center justify-content-center mb-1">
+                <i-tabler name="cash" class="icon-16 text-primary me-1"></i-tabler>
+                <small class="fw-bold">$5</small>
+              </div>
+              <span class="small text-muted">{{denominaciones.billete5}} und</span>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-center p-2 bg-light rounded">
+              <div class="d-flex align-items-center justify-content-center mb-1">
+                <i-tabler name="coin" class="icon-16 text-warning me-1"></i-tabler>
+                <small class="fw-bold">$1</small>
+              </div>
+              <span class="small text-muted">{{denominaciones.moneda1}} und</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista de canjes recientes -->
+        <div class="mb-3">
+          <h6 class="mb-2">Últimos Canjes</h6>
+          <div class="max-height-200 overflow-auto">
+            <div *ngFor="let canje of canjesRecientes" class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <div class="d-flex align-items-center">
+                <div class="me-2">
+                  <i-tabler 
+                    [name]="getIconByEstado(canje.estado)" 
+                    class="icon-16"
+                    [ngClass]="{
+                      'text-success': canje.estado === 'completado',
+                      'text-warning': canje.estado === 'procesando',
+                      'text-secondary': canje.estado === 'pendiente'
+                    }">
+                  </i-tabler>
+                </div>
+                <div>
+                  <div class="small fw-bold">{{canje.referencia}}</div>
+                  <div class="small text-muted">{{canje.fecha}}</div>
+                </div>
+              </div>
+              <div class="text-end">
+                <div class="small fw-bold">\${{canje.monto | number:'1.2-2'}}</div>
+                <div class="small">
+                  <span 
+                    class="badge"
+                    [ngClass]="{
+                      'bg-success': canje.estado === 'completado',
+                      'bg-warning': canje.estado === 'procesando',
+                      'bg-secondary': canje.estado === 'pendiente'
+                    }">
+                    {{getEstadoTexto(canje.estado)}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button mat-stroked-button color="primary" class="btn-sm">
+            <i-tabler name="eye" class="icon-16 me-1"></i-tabler>
+            Ver todos los canjes
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>

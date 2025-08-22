@@ -8,5 +8,6 @@ import { WorkTableComponent } from 'src/app/components/work-table/work-table.com
   templateUrl: './asignacion.component.html',
 })
 export class AsignacionComponent {
+  isSettings: boolean = false;
 
 }

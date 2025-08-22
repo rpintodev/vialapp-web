@@ -42,7 +42,8 @@ export class UserTrasnsacctionsComponent implements OnInit{
       '1': 'Apertura',
       '2': 'Retiro Parcial',
       '3': 'Canje',
-      '4': 'Liquidación'
+      '4': 'Liquidación',
+      '6': 'Faltante'
     };
     return types[id] || 'Desconocido';
   }
@@ -52,7 +53,8 @@ export class UserTrasnsacctionsComponent implements OnInit{
       '1': 'box',          // Apertura
       '2': 'arrow-left',   // Retiro
       '3': 'repeat',       // Canje
-      '4': 'check'         // Liquidación
+      '4': 'check',// Liquidación
+      '6': 'exclamation-mark' // Faltante 
     };
     return icons[id] || 'question-mark';
   }
@@ -70,6 +72,7 @@ export class UserTrasnsacctionsComponent implements OnInit{
   }
 
   ngOnInit() {
+    console.log(this.movimiento);
   }
 
 }

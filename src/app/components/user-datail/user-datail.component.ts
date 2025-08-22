@@ -10,6 +10,7 @@ import { MaterialModule } from 'src/app/material.module';
 import {ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import { RoutesService } from 'src/app/services/routes/routes.service';
 
 
 @Component({
@@ -96,7 +97,7 @@ export class UserDatailComponent implements OnInit{
   }
 
   private navigateToUserList(){
-    this.router.navigate(['/recaudacion-vial/usuarios']);
+    this.router.navigate([RoutesService.ROUTES.RECAUDACION_VIAL.USUARIOS]);
   }
 
   private showSuccess() {

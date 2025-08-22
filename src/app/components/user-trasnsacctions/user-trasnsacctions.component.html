@@ -26,9 +26,10 @@
                          'text-primary': trans.idTipoMovimiento === '1',
                          'text-warning': trans.idTipoMovimiento === '2',
                          'text-success': trans.idTipoMovimiento === '3',
-                         'text-info': trans.idTipoMovimiento === '4'
+                         'text-info': trans.idTipoMovimiento === '4',
+                         'text-danger': trans.idTipoMovimiento === '6'
                        }"
-                       class="icon-24"></i-tabler>
+                       class="icon-24 d-flex"></i-tabler>
             </div>
             <div>
               <h6 class="mb-1">
@@ -46,7 +47,7 @@
 
         <div class="d-flex align-items-center">
           <button mat-icon-button (click)="$event.stopPropagation(); toggleDetails(trans)">
-            <i-tabler [name]="trans.expanded ? 'chevron-up' : 'chevron-down'" class="icon-20"></i-tabler>
+            <i-tabler [name]="trans.expanded ? 'chevron-up' : 'chevron-down'" class="icon-20 d-flex"></i-tabler>
           </button>
         </div>
       </mat-card-content>

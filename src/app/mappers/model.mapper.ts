@@ -1,6 +1,9 @@
+import { I } from "@angular/cdk/a11y-module.d-DBHGyKoh";
+import { IBoveda } from "../models/boveda";
 import { IMovimiento} from "../models/movimiento";
 import { IPeaje } from "../models/peaje";
 import {IRol} from "../models/rol";
+import { ITurno } from "../models/turno";
 import { IUsuario } from "../models/usuario";
 
 export class MovimientoMapper {
@@ -93,6 +96,7 @@ export class UsuarioMapper {
       ...d      
     };
   }
+
   static toDto(d: any): IUsuario {
     return {
       Id: d.id,
@@ -113,6 +117,66 @@ export class UsuarioMapper {
       Estado: d.estado,
       Grupo: d.grupo,
       ...d      
+    };
+  }
+
+
+}
+
+export class BovedaMapper{
+  static fromDto(d:any): IBoveda {
+    return {
+      id: d.Id,
+      fecha: d.Fecha,
+      esactual: d.EsActual,
+      idpeaje: d.IdPeaje,
+      moneda001: d.Moneda_001,
+      moneda005: d.Moneda_005,
+      moneda01: d.Moneda_01,
+      moneda025: d.Moneda_025,
+      moneda05: d.Moneda_05,
+      moneda1: d.Moneda_1,
+      billete1: d.Billete_1,
+      billete2: d.Billete_2,
+      billete5: d.Billete_5,
+      billete10: d.Billete_10,
+      billete20: d.Billete_20,
+      observacion: d.Observacion,
+      total: d.Total,
+    
+    }
+  }
+}
+
+export class TurnoMapper{
+  static fromDto(d: any): ITurno {
+    return {
+      id: d.Id,
+      idSupervisor: d.IdSupervisor,
+      nombreSupervisor: d.NombreSupervisor,
+      idCajero: d.IdCajero,
+      nombreCajero: d.NombreCajero,
+      estado: d.Estado,
+      fecha: d.Fecha,
+      grupo: d.Grupo,
+      turno: d.Turno,
+      via: d.Via,
+      sessiontoken: d.SessionToken
+    };
+  }
+  static toDto(d: ITurno): any {
+    return {
+      Id: d.id,
+      IdSupervisor: d.idSupervisor,
+      NombreSupervisor: d.nombreSupervisor,
+      IdCajero: d.idCajero,
+      NombreCajero: d.nombreCajero,
+      Estado: d.estado,
+      Fecha: d.fecha,
+      Grupo: d.grupo,
+      Turno: d.turno,
+      Via: d.via,
+      SessionToken: d.sessiontoken
     };
   }
 }

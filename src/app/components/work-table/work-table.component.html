@@ -2,7 +2,6 @@
   <mat-card-content>
     <div class="d-flex align-items-center mb-3">
       <div class="tab-header">
-
         <span *ngFor="let estado of estados" 
                 class="tab-btn" 
                 [class.active]="selectedTab === estado.Id" 
@@ -22,7 +21,7 @@
                         <div class="d-flex align-items-center">
                             <img src="/assets/images/profile/user-4.jpg" alt="users" width="48" class="rounded">
                             <div class="m-l-12">
-                                <h6 class="f-s-14 f-w-600">{{element.Nombre}} {{element.Apellido}}</h6>
+                                <h6 class="f-s-14 f-w-600">{{element.nombreCajero}}</h6>
                             </div>
                         </div>
                     </td>
@@ -33,7 +32,7 @@
                         Via
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.Via??'0' }}
+                        {{ element.via??'0' }}
                     </td>
                 </ng-container>
 
@@ -43,7 +42,7 @@
                         Fecha asignados
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.Fecha??'0' }}
+                        {{ element.fecha??'0' }}
                     </td>
                 </ng-container>
                 
@@ -52,7 +51,7 @@
                         Turno
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.Turno }}
+                        {{ element.turno }}
                     </td>
                 </ng-container>
                  <ng-container matColumnDef="grupo">
@@ -60,18 +59,35 @@
                         Grupo
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{element.Grupo}}
+                        {{element.grupo}}
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="acciones">
+                <ng-container matColumnDef="acciones" *ngIf="!isSettings">
                     <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
                         Acciones
                     </th>
-                    <td mat-cell *matCellDef="let element" class="p-0">
+                    <td mat-cell *matCellDef="let element" class="p-0" >
                         <div class="d-flex flex-sm-row flex-col align-items-center justify-content-center gap-8">
-                            <button mat-mini-fab class="bg-primary text-white" (click)="getTransacctions(element.IdTurno)" aria-label="Example icon button with a delete icon">
+                            <button mat-mini-fab class="bg-primary text-white" (click)="getTransacctions(element.id)" aria-label="Example icon button with a delete icon">
                                 <i-tabler class="icon-20 d-flex" name="transfer"></i-tabler>
                             </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="acciones" *ngIf="isSettings">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+                        Acciones
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="p-0" >
+                        <div class="d-flex flex-sm-row flex-col align-items-center justify-content-center gap-8">
+                            <button mat-mini-fab [matMenuTriggerFor]="menu" class="bg-warning text-white" aria-label="Example icon button with a delete icon">
+                                <i-tabler class="icon-20 d-flex" name="settings"></i-tabler>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openTurnoDetail(element)" >Editar</button>
+                                <button mat-menu-item >Eliminar</button>
+
+                            </mat-menu>
                         </div>
                     </td>
                 </ng-container>

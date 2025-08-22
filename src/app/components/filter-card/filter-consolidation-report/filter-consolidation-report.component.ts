@@ -32,8 +32,7 @@ export class FilterConsolidationReportComponent {
   async generateReport() {
       
       this.movimientoService.getMovimientosReporteRetiros(this.fechaSeleccionada).subscribe( async response=>{
-        this.movimientos = response.map(MovimientoMapper.fromDto);
-        const pdfBlobUrl = await genterateConsolidationReport(this.movimientos);
+        const pdfBlobUrl = await genterateConsolidationReport(response);
         this.pdfGenerated.emit(pdfBlobUrl);
       });
       

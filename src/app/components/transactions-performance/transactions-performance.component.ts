@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { calcularTotalEntregado, calcularTotalRecibido, formatCurrency} from 'src/app/utils/movimientos-utils';
@@ -16,8 +16,9 @@ import { IMovimiento } from 'src/app/models/movimiento';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatDialogModule } from '@angular/material/dialog';
-import { TransactionDetailComponent } from '../transaction-detail/transaction-detail.component';
+import { TransactionViewComponent } from '../transaction-view/transaction-view.component';
 import { MovimientoMapper } from 'src/app/mappers/model.mapper';
+import { TransactionsDetailComponent } from '../transactions-detail/transactions-detail.component';
 
 @Component({
   selector: 'app-transactions-performance',
@@ -34,17 +35,18 @@ import { MovimientoMapper } from 'src/app/mappers/model.mapper';
   templateUrl: './transactions-performance.component.html',
   providers: [provideNativeDateAdapter()],
 })
-export class AppTransactionPerformanceComponent implements OnInit {
+export class AppTransactionPerformanceComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private modalService = inject(NgbModal);
+  @Input() isSettings: boolean;
   constructor(
     private tipoMovimientoService:TipoMovimientoService,
     private movimientoService:MovimientoService,
   
   ){}
 
-  displayedColumns: string[] = ['supervisor', 'cajero', 'tipoMovimiento', 'fecha', 'totalRecibido', 'totalEntregado', 'via','acciones'];
+  displayedColumns: string[] = ['supervisor', 'cajero', 'tipoMovimiento', 'fecha', 'monto', 'via','acciones'];
   dataSource = new MatTableDataSource<IMovimiento>();  
   tipoMovimiento:ITipoMovimiento[];
   tipomovimientoSeleccionado: string = '0'; // Valor por defecto para "Todos"
@@ -53,18 +55,28 @@ export class AppTransactionPerformanceComponent implements OnInit {
   totalEntregado: number = 0;
 
  
-    openTransactionDetail(element: IMovimiento) {
-      const modalRef = this.modalService.open(TransactionDetailComponent, {
-        size: 'md',
-        scrollable: true,
-        centered: true,
-        ariaLabelledBy: 'modal-basic-title',
-        backdrop: 'static',
+  openTransactionView(element: IMovimiento) {
+    const modalRef = this.modalService.open(TransactionViewComponent, {
+      size: 'md',
+      scrollable: true,
+      centered: true,
+      ariaLabelledBy: 'modal-basic-title',
+      backdrop: 'static',
         
-      });
-       modalRef.componentInstance.detalle = element;
-    }
-  
+    });
+     modalRef.componentInstance.detalle = element;
+  }
+
+  openTransactionDetail(element: IMovimiento) {
+    const modalRef = this.modalService.open(TransactionsDetailComponent, {
+      size: 'lg',
+      scrollable: true,
+      centered: true,
+      ariaLabelledBy: 'modal-basic-title',
+      backdrop: 'static',
+    });
+    modalRef.componentInstance.transaccion = element;
+  }
 
   getTiposMovimiento() {
     this.tipoMovimientoService.getAll().subscribe(response => {
@@ -79,13 +91,16 @@ export class AppTransactionPerformanceComponent implements OnInit {
     const fechaString = moment(fechaT).format('YYYY-MM-DD');
     this.movimientoService.getByDateAndTipoMovimiento(fechaString, idTipoMovimiento).subscribe(response => {
       const mappedData: IMovimiento[] = response.map(d => ({
-        totalRecibido: formatCurrency(calcularTotalRecibido(MovimientoMapper.fromDto(d))),
-        totalEntregado:formatCurrency(calcularTotalEntregado(MovimientoMapper.fromDto(d))),
+        totalRecibido: formatCurrency(calcularTotalRecibido(d)),
+        totalEntregado:formatCurrency(calcularTotalEntregado(d)),
         ...d 
       }));
-
       this.dataSource.data = mappedData;
-      this.dataSource.paginator = this.paginator;
+      setTimeout(() => {
+        if (this.paginator) {
+          this.dataSource.paginator = this.paginator;
+        }
+      });
     }, error => {
       console.error('Error al obtener los movimientos:', error);
       });
@@ -97,11 +112,18 @@ export class AppTransactionPerformanceComponent implements OnInit {
   }
 
   onFechaChange(event: any) {
-    this.getByDateAndTipoMovimiento(event.value.toString(), this.tipomovimientoSeleccionado);
+    this.getByDateAndTipoMovimiento(event.value, this.tipomovimientoSeleccionado);
   }
 
   ngOnInit(): void {
     this.getTiposMovimiento();
     this.getByDateAndTipoMovimiento(this.fechaSeleccionada.toString(), this.tipomovimientoSeleccionado);
+  }
+
+  ngAfterViewInit(): void {
+    // Asegurar que el paginator esté configurado después de que la vista esté inicializada
+    if (this.dataSource.data.length > 0) {
+      this.dataSource.paginator = this.paginator;
+    }
   }
 }

@@ -50,7 +50,7 @@ export class UserTableComponent implements OnInit,OnChanges {
   usuarios: IUsuario[];
   
 
-  applyFilter(idRol: number) {
+  private applyFilter(idRol: number) {
      if (idRol === 0 ) {
       this.dataSource.filter = this.userName.toLocaleLowerCase();
       } else {
@@ -58,31 +58,34 @@ export class UserTableComponent implements OnInit,OnChanges {
       }
   }
 
-  getRoles(){
+  private getRoles(){
     this.rolService.getRoles().subscribe(response => {
       this.roles = response.map(RolMapper.fromDto);
     })
   }
 
-  getGrupos(){
+  private getGrupos(){
     this.userService.getGrupos().subscribe(response => {
       this.grupos = response;
     })
   }
 
-  getPeajes(){
+  private getPeajes(){
     this.peajeService.getPeajes().subscribe(response => {
       this.peajes = response.map(PeajeMapper.fromDto);
     })
   }
 
-  getUsuarios(){
-    this.userService.getUsuariosByPeaje().subscribe(response =>{
-      this.usuarios = response;
-      this.dataSource.data=this.usuarios;
-      this.dataSource.paginator = this.paginator;
-    }, error =>{
-      console.error('Error al obtener usuarios:', error);
+  private handleSuccess(response: any[]){
+    this.usuarios = response;
+    this.dataSource.data=this.usuarios;
+    this.dataSource.paginator=this.paginator;
+  }
+
+  private getUsuarios(){
+    this.userService.getUsuariosByPeaje().subscribe({
+      next: (response) => this.handleSuccess(response),
+      error: (error) => console.error(error)
     })
   }
 
@@ -118,7 +121,7 @@ export class UserTableComponent implements OnInit,OnChanges {
     this.loadData();
   }
 
-  loadData() {
+  private loadData() {
     this.getRoles();
     this.getGrupos();
     this.getPeajes();

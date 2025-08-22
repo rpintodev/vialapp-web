@@ -26,4 +26,13 @@ export class MovimientoRequestFactory {
       id_peaje: idPeaje
     };
   }
+
+  createVentaTagRequest(mes: number, idPeaje: string): any {
+    return {
+      mes: mes,
+      año: new Date().getFullYear(),
+      id_peaje: idPeaje
+    };
+  }
+
 }

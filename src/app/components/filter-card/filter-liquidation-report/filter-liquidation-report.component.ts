@@ -24,30 +24,26 @@ export class FilterLiquidationReportComponent implements OnInit {
 
     fechaSeleccionada: Date = new Date();
     selectedCajero:IMovimiento[];
-    cajeroSeleccionado: string = '0'; // Valor por defecto para "Todos"
+    cajeroSeleccionado: string = '0';
     movimientos: IMovimiento[];
     @Output() pdfGenerated = new EventEmitter<string>();
 
   constructor(private movimientoService:MovimientoService) {}
 
-  getCajerosLiquidados(fecha:Date){
-    const fechaInicio=moment(fecha).format('YYYY-MM-DD hh:mm:ss');
-    this.movimientoService.getCajerosliquidadosByDate(fechaInicio).subscribe(response =>{
+  getCajerosLiquidados(fecha:string){
+    this.movimientoService.getCajerosliquidadosByDate(fecha).subscribe(response =>{
       this.selectedCajero = response.map(d=> ({
         id: d.Id,
         nombreCajero: d.NombreCajero,
         idturno: d.IdTurno,
         fecha: d.Fecha,
       }));
-      console.log("Cajeros liquidados:", this.selectedCajero);
     },error =>{
       console.error("Error al obtener cajeros liquidados:", error);
     });
   }
 
   setCajeroSeleccionado(event: any) {
-
-    console.log('Id turno seleccionado:',event);
     this.cajeroSeleccionado = event;
   }
 
@@ -56,7 +52,7 @@ export class FilterLiquidationReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCajerosLiquidados(this.fechaSeleccionada);
+    this.getCajerosLiquidados(this.fechaSeleccionada.toString());
   }
 
   async generateReport(idTurno:string) {

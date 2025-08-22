@@ -1,0 +1,47 @@
+<div class="row g-4">
+  <!-- Tarjeta Bóveda -->
+  <div class="col-md-6">
+    <mat-card class="settings-card bg-light-primary position-relative">
+      <button mat-icon-button class="settings-btn" aria-label="Configurar bóveda" (click)="openBovedaModal(boveda)">
+        <i-tabler name="settings" class="icon-20"></i-tabler>
+      </button>
+      <mat-card-title class="mb-2">Bóveda</mat-card-title>
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <h2 class="fw-bold mb-0">${{boveda.total}}</h2>
+          <span class="text-muted">Saldo actual</span>
+        </div>
+        <!-- Mini gráfico decorativo -->
+        <div class="mini-chart">
+          <svg width="60" height="40">
+            <polyline points="0,30 15,20 30,25 45,10 60,15"
+                      style="fill:none;stroke:#398bf7;stroke-width:3" />
+          </svg>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Tarjeta Bóveda Tag -->
+  <div class="col-md-6">
+    <mat-card class="settings-card bg-light-success position-relative">
+      <button mat-icon-button class="settings-btn" aria-label="Configurar bóveda tag" (click)="openBovedaModal(bovedaTag)">
+        <i-tabler name="settings" class="icon-20"></i-tabler>
+      </button>
+      <mat-card-title class="mb-2">Bóveda Tag</mat-card-title>
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <h2 class="fw-bold mb-0">${{bovedaTag.total}}</h2>
+          <span class="text-muted">Saldo actual</span>
+        </div>
+        <!-- Mini gráfico decorativo -->
+        <div class="mini-chart">
+          <svg width="60" height="40">
+            <polyline points="0,35 15,25 30,30 45,20 60,10"
+                      style="fill:none;stroke:#4caf50;stroke-width:3" />
+          </svg>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

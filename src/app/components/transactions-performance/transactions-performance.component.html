@@ -36,7 +36,7 @@
                             <img src="/assets/images/profile/user-4.jpg" alt="users" width="48" class="rounded" />
                             <div class="m-l-16">
                                 <h6 class="f-s-14 f-w-600">
-                                    {{ element.NombreSupervisor }}
+                                    {{ element.nombreSupervisor }}
                                 </h6>
                                 <span class=" f-s-12">
                                 </span>
@@ -55,7 +55,7 @@
                             <img src="/assets/images/profile/user-1.jpg" alt="users" width="48" class="rounded" />
                             <div class="m-l-16">
                                 <h6 class="f-s-14 f-w-600">
-                                    {{ element.NombreCajero }}
+                                    {{ element.nombreCajero }}
                                 </h6>
                                 <span class=" f-s-12">
                                 </span>
@@ -70,42 +70,42 @@
                         Tipo Movimiento
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        @if(element.NombreMovimiento == 'Apertura') {
+                        @if(element.nombreMovimiento == 'Apertura') {
                         <span class="bg-light-success text-success rounded f-w-600 p-6 p-y-4 f-s-12">
-                            {{ element.NombreMovimiento | titlecase }}
+                            {{ element.nombreMovimiento | titlecase }}
                         </span>
                         }
 
-                        @if(element.NombreMovimiento == 'Retiros Parciales') {
+                        @if(element.nombreMovimiento == 'Retiros Parciales') {
                         <span class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12">
-                            {{ element.NombreMovimiento | titlecase }}
+                            {{ element.nombreMovimiento | titlecase }}
                         </span>
                         }
 
-                        @if(element.NombreMovimiento == 'Canje') {
+                        @if(element.nombreMovimiento == 'Canje') {
                         <span class="bg-light-warning text-warning rounded f-w-600 p-6 p-y-4 f-s-12">
-                            {{ element.NombreMovimiento | titlecase }}
+                            {{ element.nombreMovimiento | titlecase }}
                         </span>
                         }
 
-                        @if(element.NombreMovimiento == 'Liquidacion') {
+                        @if(element.nombreMovimiento == 'Liquidacion') {
                         <span class="bg-light-error text-error rounded f-w-600 p-6 p-y-4 f-s-12">
-                            {{ element.NombreMovimiento | titlecase }}
+                            {{ element.nombreMovimiento | titlecase }}
                         </span>
                         }
-                        @if(element.NombreMovimiento == 'Fortius') {
+                        @if(element.nombreMovimiento == 'Fortius') {
                         <span class="bg-light-info text-info rounded f-w-600 p-6 p-y-4 f-s-12">
-                            {{ element.NombreMovimiento | titlecase }}
+                            {{ element.nombreMovimiento | titlecase }}
                         </span>
                         }
-                        @if(element.NombreMovimiento == 'Faltante') {
+                        @if(element.nombreMovimiento == 'Faltante') {
                         <span class="bg-light-warning text-warning rounded f-w-600 p-6 p-y-4 f-s-12">
-                            {{ element.NombreMovimiento | titlecase }}
+                            {{ element.nombreMovimiento | titlecase }}
                         </span>
                         }
-                        @if(element.NombreMovimiento == 'Tag') {
+                        @if(element.nombreMovimiento == 'Tag') {
                         <span class="bg-light-error text-error rounded f-w-600 p-6 p-y-4 f-s-12">
-                            {{ element.NombreMovimiento | titlecase }}
+                            {{ element.nombreMovimiento | titlecase }}
                         </span>
                         }
                     </td>
@@ -117,29 +117,21 @@
                         Fecha
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.Fecha }}
+                        {{ element.fecha | date:'HH:mm' }}
                     </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="totalRecibido">
+                <ng-container matColumnDef="monto">
                     <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
-                        Recibido
+                        Monto
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.totalRecibido }}
+                        {{ element.idTipoMovimiento=='1'||element.idTipoMovimiento=='5'?element.totalEntregado:element.totalRecibido }}
                     </td>
                 </ng-container>
 
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="totalEntregado">
-                    <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
-                        Entregado
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        {{ element.totalEntregado }}
-                    </td>
-                </ng-container>
+    
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="via">
@@ -147,19 +139,36 @@
                         via
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.Via }}
+                        {{ element.via }}
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="acciones">
+                <ng-container matColumnDef="acciones" *ngIf="!isSettings">
                     <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
-                    
+                    Acciones
                     </th>
-                    <td mat-cell *matCellDef="let element">
-                        <button mat-icon-button color="primary" aria-label="Editar" (click)="openTransactionDetail(element)">
-                            <i-tabler name="eye" class="icon-20"></i-tabler>
+                    <td mat-cell *matCellDef="let element" class="p-0">
+                    <div class="d-flex flex-sm-row flex-col align-items-center justify-content-center gap-8">
+                        <button mat-mini-fab class="bg-primary text-white" aria-label="Editar" (click)="openTransactionView(element)">
+                            <i-tabler name="eye" class="icon-20 d-flex"></i-tabler>
                         </button>
+                    </div>
             
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="acciones" *ngIf="isSettings">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+                        Acciones
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="p-0" >
+                        <div class="d-flex flex-sm-row flex-col align-items-center justify-content-center gap-8">
+                            <button [matMenuTriggerFor]="menu" mat-mini-fab class="bg-warning text-white" aria-label="Example icon button with a delete icon" >
+                                <i-tabler class="icon-20 d-flex" name="settings"></i-tabler>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openTransactionDetail(element)" >Editar</button>
+                            </mat-menu>
+                        </div>
                     </td>
                 </ng-container>
 

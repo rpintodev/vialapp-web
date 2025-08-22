@@ -1,4 +1,5 @@
 import { NavItem } from './nav-item/nav-item';
+import { RoutesService } from 'src/app/services/routes/routes.service';
 
 export const navItems: NavItem[] = [
   {
@@ -7,7 +8,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Dashboard',
     iconName: 'layout-grid-add',
-    route: '/dashboard',
+    route: RoutesService.ROUTES.DASHBOARD,
   },
   
 
@@ -26,14 +27,14 @@ export const navItems: NavItem[] = [
         iconName: 'user-square',
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route: '/recaudacion-vial/asignacion',
+        route: RoutesService.ROUTES.RECAUDACION_VIAL.ASIGNACION,
       },
       {
         displayName: 'Usuarios',
         iconName: 'users-group',
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route: '/recaudacion-vial/usuarios',
+        route: RoutesService.ROUTES.RECAUDACION_VIAL.USUARIOS,
       },
     ],
   },
@@ -54,24 +55,21 @@ export const navItems: NavItem[] = [
         iconName: 'file-invoice',
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route:
-          '/reports/liquidation-report',
+        route: RoutesService.ROUTES.REPORTS.LIQUIDATION,
       },
       {
         displayName: 'Informe de bóveda',
         iconName: 'file-invoice',
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route:
-          '/reports/boveda-report',
+        route: RoutesService.ROUTES.REPORTS.BOVEDA,
       },
       {
         displayName: 'Consolidado',
         iconName: 'file-invoice',
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route:
-          '/reports/consolidated-report',
+        route: RoutesService.ROUTES.REPORTS.CONSOLIDATED,
       },
     ],
   },
@@ -87,7 +85,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'App Settings',
     iconName: 'settings',
-    route: '/settings',
+    route: RoutesService.ROUTES.SETTINGS.APP_SETTINGS,
   },
   
 ];

@@ -1,8 +1,13 @@
 export interface ITurno{
     id:string,
     idSupervisor:string,
+    nombreSupervisor:string,
     idCajero:string,
-    estado:number,
-    via:number,
+    nombreCajero:string,
+    estado:string,
+    fecha:string,
+    grupo:string,
+    turno:string,
+    via:string,
     sessiontoken:string
 }

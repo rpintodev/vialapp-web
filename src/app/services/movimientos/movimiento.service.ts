@@ -23,7 +23,7 @@ export class MovimientoService {
 
   getByDateAndTipoMovimiento(fecha: string, idTipoMovimiento: string): Observable<any[]> {
     const request = this.requestFactory.createByDateAndTipoRequest(fecha, idTipoMovimiento, this.userPeajeId);
-    return this.http.post<any[]>(`${this.apiUrl}/findByDateTipoMovimiento`, request);
+    return this.http.post<any[]>(`${this.apiUrl}/findByDateTipoMovimiento`, request).pipe(map((response) => response.map(MovimientoMapper.fromDto)));
   }
 
   getCajerosliquidadosByDate(fecha: string): Observable<any[]> {
@@ -31,11 +31,18 @@ export class MovimientoService {
     return this.http.post<any[]>(`${this.apiUrl}/getCajerosliquidadosByDate`, request);
   }
 
+  getVentaTag(mes: number):Observable<any[]> {
+    const request = this.requestFactory.createVentaTagRequest(mes, this.userPeajeId);
+    return this.http.post<any[]>(`${this.apiUrl}/getVentaTag`, request).pipe(
+      map((response) => response.map(MovimientoMapper.fromDto))
+    );
+  }
+
   getMovimientosByTurno(idTurno: string): Observable<IMovimiento[]> {
     const request = { IdTurno: idTurno };
     return this.http.post<any[]>(`${this.apiUrl}/findByTurno`, request).pipe(
-      map((response) => response.map(MovimientoMapper.fromDto))
-    );
+      map((response) => response.map(MovimientoMapper.fromDto)));
+
   }
   
   getMovimientosReporteRetiros(fecha: Date): Observable<any[]> {
@@ -44,6 +51,15 @@ export class MovimientoService {
       fecha_fin: fecha,
       id_peaje: this.userPeajeId
     };
-    return this.http.post<any[]>(`${this.apiUrl}/getMovimientosReporteRetiros`, request);
+    return this.http.post<any[]>(`${this.apiUrl}/getMovimientosReporteRetiros`, request).pipe(
+      map((response) => response.map(MovimientoMapper.fromDto))
+    );
+  }
+
+  getUltimosDepositos(): Observable<any[]> {
+    const request = {id_peaje: this.userPeajeId};
+    return this.http.post<any[]>(`${this.apiUrl}/getFortiusByDateActual`, request).pipe(
+      map((response) => response.map(MovimientoMapper.fromDto))
+    );
   }
 }

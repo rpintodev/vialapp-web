@@ -1,0 +1,277 @@
+<div class="modal-header bg-light">
+  <div class="col">
+    <h3 class="modal-title">{{transaccion.nombreMovimiento}}</h3>
+    <p class="text-muted mb-0">{{transaccion.fecha}}</p>
+    <p class="text-muted mb-0">Turno: {{transaccion.turno}}</p>
+  </div>
+  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="formTransactionDetail" (ngSubmit)="validateForm()" class="row g-4">
+  
+    <!-- Información del Supervisor -->
+    <div class="col-6 mb-3">
+      <h6 class="mb-3 text-primary">Información del Supervisor</h6>
+      <div class="d-flex align-items-center p-3 bg-light rounded">
+        <img src="/assets/images/profile/user-4.jpg" alt="supervisor" width="48" class="rounded-circle me-3">
+        <div>
+          <h6 class="mb-0">{{transaccion.nombreSupervisor || 'Juan Pérez'}}</h6>
+          <small class="text-muted">Supervisor asignado</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información del Cajero -->
+    <div class="col-6 mb-3">
+      <h6 class="mb-3 text-success">Información del Cajero</h6>
+      <div class="d-flex align-items-center p-3 bg-light rounded">
+        <img src="/assets/images/profile/user-4.jpg" alt="cajero" width="48" class="rounded-circle me-3">
+        <div>
+          <h6 class="mb-0">{{transaccion.nombreCajero || 'María González'}}</h6>
+          <small class="text-muted">Cajero asignado</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Denominaciones Principales -->
+    <div class="col-12">
+      <div class="row">
+        <!-- RECIBIDO (Izquierda) -->
+        <div class="col-md-6">
+          <h6 class="mb-3 text-info">
+            <i-tabler name="arrow-down" class="icon-20 me-1"></i-tabler>
+            Recibido
+          </h6>
+          <div class="row g-3">
+            <!-- $20 Recibido -->
+            <div class="col-6">
+              <label class="form-label fw-bold">$20</label>
+              <div class="input-group">
+                <span class="input-group-text icon-center">
+                  <i-tabler name="cash" class="icon-20 d-flex text-success"></i-tabler>
+                </span>
+                <input type="number" min="0" class="form-control" formControlName="recibe20d" placeholder="0">
+              </div>
+              <div *ngIf="hasErrors('recibe20d', 'required')" class="text-danger small">Obligatorio</div>
+            </div>
+            <!-- $10 Recibido -->
+            <div class="col-6">
+              <label class="form-label fw-bold">$10</label>
+              <div class="input-group">
+                <span class="input-group-text icon-center">
+                  <i-tabler name="cash" class="icon-20 d-flex text-success"></i-tabler>
+                </span>
+                <input type="number" min="0" class="form-control" formControlName="recibe10d" placeholder="0">
+              </div>
+              <div *ngIf="hasErrors('recibe10d', 'required')" class="text-danger small">Obligatorio</div>
+            </div>
+            <!-- $5 Recibido -->
+            <div class="col-6">
+              <label class="form-label fw-bold">$5</label>
+              <div class="input-group">
+                <span class="input-group-text icon-center">
+                  <i-tabler name="cash" class="icon-20 d-flex text-success"></i-tabler>
+                </span>
+                <input type="number" min="0" class="form-control" formControlName="recibe5d" placeholder="0">
+              </div>
+            </div>
+            <!-- $1 Recibido -->
+            <div class="col-6">
+              <label class="form-label fw-bold">$1</label>
+              <div class="input-group">
+                <span class="input-group-text icon-center">
+                  <i-tabler name="coin" class="icon-20 d-flex text-warning"></i-tabler>
+                </span>
+                <input type="number" min="0" class="form-control" formControlName="recibe1d" placeholder="0">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENTREGADO (Derecha) -->
+        <div class="col-md-6">
+          <h6 class="mb-3 text-warning">
+            <i-tabler name="arrow-up" class="icon-20 me-1"></i-tabler>
+            Entregado
+          </h6>
+          <div class="row g-3">
+            <!-- $20 Entregado -->
+            <div class="col-6">
+              <label class="form-label fw-bold">$20</label>
+              <div class="input-group">
+                <span class="input-group-text icon-center">
+                  <i-tabler name="cash" class="icon-20 d-flex text-success"></i-tabler>
+                </span>
+                <input type="number" min="0" class="form-control" formControlName="entrega20d" placeholder="0">
+              </div>
+            </div>
+            <!-- $10 Entregado -->
+            <div class="col-6">
+              <label class="form-label fw-bold">$10</label>
+              <div class="input-group">
+                <span class="input-group-text icon-center">
+                  <i-tabler name="cash" class="icon-20 d-flex text-success"></i-tabler>
+                </span>
+                <input type="number" min="0" class="form-control" formControlName="entrega10d" placeholder="0">
+              </div>
+            </div>
+            <!-- $5 Entregado -->
+            <div class="col-6">
+              <label class="form-label fw-bold">$5</label>
+              <div class="input-group">
+                <span class="input-group-text icon-center">
+                  <i-tabler name="cash" class="icon-20 d-flex text-success"></i-tabler>
+                </span>
+                <input type="number" min="0" class="form-control" formControlName="entrega5d" placeholder="0">
+              </div>
+            </div>
+            <!-- $1 Entregado -->
+            <div class="col-6">
+              <label class="form-label fw-bold">$1</label>
+              <div class="input-group">
+                <span class="input-group-text icon-center">
+                  <i-tabler name="coin" class="icon-20 d-flex text-warning"></i-tabler>
+                </span>
+                <input type="number" min="0" class="form-control" formControlName="entrega1d" placeholder="0">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón para mostrar/ocultar denominaciones adicionales -->
+      <div class="col-12 text-center mt-3">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="toggleDenominacionesAdicionales()">
+          <i-tabler [name]="showDenominacionesAdicionales ? 'chevron-up' : 'chevron-down'" class="icon-16 me-1"></i-tabler>
+          {{showDenominacionesAdicionales ? 'Ocultar' : 'Mostrar'}} denominaciones adicionales
+        </button>
+      </div>
+
+      <!-- Denominaciones Adicionales (Desplegable) -->
+      <div class="col-12 mt-3" *ngIf="showDenominacionesAdicionales">
+        <div class="border rounded p-3 bg-light">
+          <h6 class="mb-3 text-secondary">Denominaciones Adicionales</h6>
+          <div class="row">
+            <!-- RECIBIDO Adicional -->
+            <div class="col-md-6">
+              <h6 class="mb-3 text-info">Recibido (Monedas)</h6>
+              <div class="row g-3">
+                <div class="col-6">
+                  <label class="form-label fw-bold">50¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="recibe50c" placeholder="0">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold">25¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="recibe25c" placeholder="0">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold">10¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="recibe10c" placeholder="0">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold">5¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="recibe5c" placeholder="0">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold">1¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="recibe1c" placeholder="0">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ENTREGADO Adicional -->
+            <div class="col-md-6">
+              <h6 class="mb-3 text-warning">Entregado (Monedas)</h6>
+              <div class="row g-3">
+                <div class="col-6">
+                  <label class="form-label fw-bold">50¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="entrega50c" placeholder="0">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold">25¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="entrega25c" placeholder="0">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold">10¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="entrega10c" placeholder="0">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold">5¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="entrega5c" placeholder="0">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label fw-bold">1¢</label>
+                  <div class="input-group">
+                    <span class="input-group-text icon-center">
+                      <i-tabler name="coin" class="icon-18 d-flex text-secondary"></i-tabler>
+                    </span>
+                    <input type="number" min="0" class="form-control" formControlName="entrega1c" placeholder="0">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="col-12 d-flex justify-content-end gap-2 mt-4">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">
+        <i-tabler name="x" class="icon-18 me-1"></i-tabler>
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="formTransactionDetail.invalid">
+        <i-tabler name="device-floppy" class="icon-18 me-1"></i-tabler>
+        Guardar cambios
+      </button>
+    </div>
+
+  </form>
+</div>

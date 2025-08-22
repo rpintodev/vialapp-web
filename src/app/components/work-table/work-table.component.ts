@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, ViewChild } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator } from '@angular/material/paginator';
@@ -17,6 +17,9 @@ import { MovimientoService } from 'src/app/services/movimientos/movimiento.servi
 import { calcularTotalRecibido,calcularTotalEntregado } from 'src/app/utils/movimientos-utils';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ITurno } from 'src/app/models/turno';
+import { TurnoService } from 'src/app/services/turno/turno.service';
+import { TurnoDetailComponent } from '../turno-detail/turno-detail.component';
 
 @Component({
   selector: 'app-work-table',
@@ -37,16 +40,20 @@ export class WorkTableComponent implements OnInit {
   constructor(
     private estadoService: EstadoService,
     private usuarioService: UsuarioService,
+    private turnoService: TurnoService,
     private movimientoService: MovimientoService,
   ) {}
 
   private modalService = inject(NgbModal);
 
+  @Input() isSettings: boolean;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
   selectedTab: string = '1';
   estados: any[];
   movimientos: IMovimiento[];
-  dataSource = new MatTableDataSource<IUsuario>();
-  usuarios: IUsuario[] = [];
+  dataSource = new MatTableDataSource<ITurno>();
+  usuariosTurno: ITurno[] = [];
   displayedColumns: string[]= ['nombre', 'via','fecha', 'turno', 'grupo','acciones'];
   
   private getAllEstados(){
@@ -60,15 +67,19 @@ export class WorkTableComponent implements OnInit {
     });
   }
 
-  private getUsuariosByEstado(){
-    this.usuarioService.getByEstadoTurno().subscribe({
-      next: (data)=>{
-        this.usuarios= data; 
-        this.dataSource.data = this.usuarios;
-        this.applyFilter(this.selectedTab);
-      },
-      error: (error) => {
+  private handleSuccess(response: any[]){
+    this.usuariosTurno= response; 
+    this.dataSource.data = this.usuariosTurno;
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      this.applyFilter(this.selectedTab);
+    });
+  }
 
+  private getUsuariosByEstado(){
+    this.turnoService.getAll().subscribe({
+      next: (data)=>{this.handleSuccess(data)},
+      error: (error) => {console.error('Error fetching usuarios:', error);
       }
     })
   }
@@ -80,7 +91,7 @@ export class WorkTableComponent implements OnInit {
 
   public getTransacctions(turno: string) {
     this.movimientoService.getMovimientosByTurno(turno).subscribe({
-      next: (data) => { 
+      next: (data) => {
         data.forEach(mov => {
           mov.totalRecibido = calcularTotalRecibido(mov).toString();
           mov.totalEntregado = calcularTotalEntregado(mov).toString();
@@ -92,7 +103,10 @@ export class WorkTableComponent implements OnInit {
   }
 
   applyFilter(estado:string) {
-    this.dataSource.data = this.usuarios.filter(u => u.Estado == estado);
+    this.dataSource.data = this.usuariosTurno.filter(u => u.estado == estado);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   setTab(tab: string) {
@@ -112,8 +126,22 @@ export class WorkTableComponent implements OnInit {
         ariaLabelledBy: 'modal-basic-title',
         backdrop: 'static',
       });
-
-      
       modalRef.componentInstance.movimiento = element;
+  }
+
+  openTurnoDetail(turno: ITurno){
+    const modalRef = this.modalService.open(TurnoDetailComponent, {
+      size: 'lg',
+      centered: true,
+      scrollable: true,
+      ariaLabelledBy: 'modal-basic-title',
+      backdrop: 'static',
+    });
+
+    modalRef.componentInstance.turno = turno;
+    modalRef.componentInstance.estados = this.estados;
+    modalRef.componentInstance.turnoGuardado.subscribe(() => {
+      this.loadData(); // <-- Aquí actualizas la tabla
+    });
   }
 }

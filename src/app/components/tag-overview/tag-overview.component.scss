@@ -1,0 +1,38 @@
+.chart-container {
+  height: 245px; // Altura optimizada para mostrar todo el contenido
+  overflow: visible; // Cambiar a visible para no cortar contenido
+  padding-bottom: 15px; // Agregar padding inferior para las etiquetas
+  
+  apx-chart {
+    height: 100% !important;
+    
+    // Estilos específicos para ApexCharts
+    .apexcharts-canvas {
+      overflow: visible !important;
+    }
+    
+    // Asegurar que las etiquetas del eje X sean visibles
+    .apexcharts-xaxis-texts-g text {
+      font-size: 11px !important;
+    }
+    
+    // Ajustar el viewport del SVG si es necesario
+    .apexcharts-svg {
+      overflow: visible !important;
+    }
+  }
+}
+
+// Estilos adicionales para el componente
+.cardWithShadow {
+  .mat-card-content {
+    padding: 24px;
+  }
+}
+
+// Responsive para móviles
+@media (max-width: 768px) {
+  .chart-container {
+    height: 200px; // Altura más pequeña en móviles
+  }
+}

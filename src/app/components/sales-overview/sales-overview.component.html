@@ -4,8 +4,23 @@
             <mat-card-header  class="mat-mdc-card-header p-b-6" style="padding: 8px;">
                
                 <div class="d-flex w-100">
-                    <div><mat-card-title class="mat-mdc-card-title">Denominaciones en boveda</mat-card-title>
-                        <mat-card-subtitle class="mat-mdc-card-subtitle">Actualizado: </mat-card-subtitle>
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <div class="bg-light-primary rounded p-3">
+                                <i-tabler name="credit-card" class="icon-24 text-primary"></i-tabler>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="mb-1">Boveda</h6>
+                            <h3 class="mb-0 text-primary">{{ultimaBoveda.total}}</h3>
+                            <small class="text-muted">Saldo Actual</small>
+                        </div>
+                        <!-- Padding a la izquierda para el boton -->
+                        <div class="ms-3">
+                            <button mat-stroked-button color="primary" class="btn-sm" (click)="getBoveda(fechaSeleccionada)">
+                                <span class="mdc-button__label">Actualizar</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="m-l-auto">
                         	<mat-form-field color="accent" appearance="outline" class="w-100">
@@ -37,22 +52,7 @@
                         [colors]="areaChartOptions.colors"
                         [markers]="areaChartOptions.markers">
                     </apx-chart>
-                    </div>
-
-                    <!-- Total -->
-                    <div class="d-flex align-items-center justify-content-end p-3" style="flex: 0 0 auto;">
-                    <div>
-                        <h5 class="f-s-24 m-b-4">
-                        {{ultimaBoveda.total}}
-                        </h5>
-                        <span class="f-s-14">Total</span>
-                        <button mat-flat-button class="mdc-button mat-mdc-button-base w-100 m-t-32 mdc-button--unelevated mat-mdc-unelevated-button mat-unthemed" mat-ripple-loader-class-name="mat-mdc-button-ripple" (click)="getBoveda(fechaSeleccionada)">
-                        <span class="mdc-button__label">Actualizar</span>
-                        </button>
-                    </div>
-                    
-                    </div>
-                    
+                    </div>                    
                 </div>
             </mat-card-content>
         </mat-card>

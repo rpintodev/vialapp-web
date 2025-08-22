@@ -1,0 +1,119 @@
+<div class="modal-header">
+  <h4 class="modal-title">Editar Bóveda</h4>
+  <button type="button" class="btn-close" (click)="modal.close()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="FormBovedaModify" (ngSubmit)="submit()" class="row g-4">
+    <!-- Billetes -->
+    <div class="col-12 mb-3">
+      <h6 class="mb-2">Billetes</h6>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label fw-bold">$ 20</label>
+          <div class="input-group">
+            <span class="input-group-text icon-center">
+                <i-tabler name="cash" class="icon-20 d-flex text-primary"></i-tabler>
+            </span>
+            <input type="number" min="0" class="form-control" formControlName="billete20" placeholder="Cantidad">
+          </div>
+            <div *ngIf="hasErrors('billete20', 'required')" class="text-danger">Este campo es obligatorio</div>
+            <div *ngIf="hasErrors('billete20', 'pattern')" class="text-danger">Solo se permiten números mayores a 0</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">$ 10</label>
+          <div class="input-group">
+            <span class="input-group-text icon-center">
+                <i-tabler name="cash" class="icon-20 d-flex text-primary"></i-tabler>
+            </span>
+            <input type="number" min="0" class="form-control" formControlName="billete10" placeholder="Cantidad">
+          </div>
+          <div *ngIf="hasErrors('billete10', 'required')" class="text-danger">Este campo es obligatorio</div>
+          <div *ngIf="hasErrors('billete10', 'pattern')" class="text-danger">Solo se permiten números mayores a 0</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">$ 5</label>
+            <div class="input-group">
+              <span class="input-group-text icon-center">
+                <i-tabler name="cash" class="icon-20 d-flex text-primary"></i-tabler>
+              </span>
+              <input type="number" min="0" class="form-control" formControlName="billete5" placeholder="Cantidad">
+            </div>
+            <div *ngIf="hasErrors('billete5', 'required')" class="text-danger">Este campo es obligatorio</div>
+            <div *ngIf="hasErrors('billete5', 'pattern')" class="text-danger">Solo se permiten números mayores a 0</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">$ 1</label>
+            <div class="input-group">
+              <span class="input-group-text icon-center">
+                <i-tabler name="coin" class="icon-20 d-flex text-warning"></i-tabler>
+              </span>
+              <input type="number" min="0" class="form-control" formControlName="moneda1d" placeholder="Cantidad">
+            </div>
+            <div *ngIf="hasErrors('moneda1d', 'required')" class="text-danger">Este campo es obligatorio</div>
+            <div *ngIf="hasErrors('moneda1d', 'pattern')" class="text-danger">Solo se permiten números mayores a 0</div>  
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">50 ¢</label>
+            <div class="input-group">
+              <span class="input-group-text icon-center">
+                <i-tabler name="coin" class="icon-20 d-flex text-warning"></i-tabler>
+              </span>
+              <input type="number" min="0" class="form-control" formControlName="moneda05" placeholder="Cantidad">
+            </div>
+            <div *ngIf="hasErrors('moneda05', 'required')" class="text-danger">Este campo es obligatorio</div>
+            <div *ngIf="hasErrors('moneda05', 'pattern')" class="text-danger">Solo se permiten números mayores a 0</div>  
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">25 ¢</label>
+            <div class="input-group">
+              <span class="input-group-text icon-center">
+                <i-tabler name="coin" class="icon-20 d-flex text-warning"></i-tabler>
+              </span>
+              <input type="number" min="0" class="form-control" formControlName="moneda025" placeholder="Cantidad">
+            </div>
+            <div *ngIf="hasErrors('moneda025', 'required')" class="text-danger">Este campo es obligatorio</div>
+            <div *ngIf="hasErrors('moneda025', 'pattern')" class="text-danger">Solo se permiten números mayores a 0</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">10 ¢</label>
+            <div class="input-group">
+              <span class="input-group-text icon-center">
+                <i-tabler name="coin" class="icon-20 d-flex text-warning"></i-tabler>
+              </span>
+              <input type="number" min="0" class="form-control" formControlName="moneda01" placeholder="Cantidad">
+            </div>
+            <div *ngIf="hasErrors('moneda01', 'required')" class="text-danger">Este campo es obligatorio</div>
+            <div *ngIf="hasErrors('moneda01', 'pattern')" class="text-danger">Solo se permiten números mayores a 0</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">5 ¢</label>
+            <div class="input-group">
+              <span class="input-group-text icon-center">
+                <i-tabler name="coin" class="icon-20 d-flex text-warning"></i-tabler>
+              </span>
+              <input type="number" min="0" class="form-control" formControlName="moneda005" placeholder="Cantidad">
+            </div>
+            <div *ngIf="hasErrors('moneda005', 'required')" class="text-danger">Este campo es obligatorio</div>
+            <div *ngIf="hasErrors('moneda005', 'pattern')" class="text-danger">Solo se permiten números mayores a 0</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">1 ¢</label>
+            <div class="input-group">
+              <span class="input-group-text icon-center">
+                <i-tabler name="coin" class="icon-20 d-flex text-warning"></i-tabler>
+              </span>
+              <input type="number" min="0" class="form-control" formControlName="moneda001" placeholder="Cantidad">
+            </div>
+            <div *ngIf="hasErrors('moneda001', 'required')" class="text-danger">Este campo es obligatorio</div>
+            <div *ngIf="hasErrors('moneda001', 'pattern')" class="text-danger">Solo se permiten números mayores a 0</div>
+        </div>
+      </div>
+    </div>
+    <!-- Botón de guardar -->
+    <div class="col-12 text-end mt-3">
+      <button type="submit" class="btn btn-primary">
+        <i-tabler name="device-floppy" class="icon-18 me-1"></i-tabler> Guardar</button>
+    </div>
+  </form>
+</div>
