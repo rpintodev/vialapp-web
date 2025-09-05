@@ -35,4 +35,15 @@ export class MovimientoRequestFactory {
     };
   }
 
+  
+  createFortiusRequest(idPeaje: string): any {
+    return {
+      mes: new Date().getMonth() + 1,
+      año: new Date().getFullYear(),
+      id_peaje: idPeaje
+    };
+  }
+
+
+
 }

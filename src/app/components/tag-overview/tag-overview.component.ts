@@ -22,6 +22,7 @@ import { MovimientoService } from 'src/app/services/movimientos/movimiento.servi
 export class TagOverviewComponent implements OnInit {
   saldoTags = 45230.50;
   cantidadTags = 1250;
+  tagsVendidos: number;
   selectedMonth = new Date().getMonth();
   currentMonth = '';
   public areaChartOptions: Partial<ChartOptions> | any;

@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { MovimientoRequestFactory } from '../../factories/movimeinto-request.factory';
 import { MovimientoMapper } from 'src/app/mappers/model.mapper';
 import { IMovimiento } from 'src/app/models/movimiento';
+import { get } from 'node:http';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,13 @@ export class MovimientoService {
   getUltimosDepositos(): Observable<any[]> {
     const request = {id_peaje: this.userPeajeId};
     return this.http.post<any[]>(`${this.apiUrl}/getFortiusByDateActual`, request).pipe(
+      map((response) => response.map(MovimientoMapper.fromDto))
+    );
+  }
+
+  getUltimosCanjes(): Observable<any[]> {
+    const request = this.requestFactory.createFortiusRequest(this.userPeajeId);
+    return this.http.post<any[]>(`${this.apiUrl}/getFortiusByMonth`, request).pipe(
       map((response) => response.map(MovimientoMapper.fromDto))
     );
   }
