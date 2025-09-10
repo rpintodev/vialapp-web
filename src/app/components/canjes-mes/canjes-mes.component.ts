@@ -45,7 +45,6 @@ export class CanjesMesComponent implements OnInit {
         }));
         this.canjes = this.movimientos.filter(movimiento => parseInt(movimiento.totalRecibido ?? '0') > 0);
         this.getUltimoCanje(this.canjes);
-        console.log('Canjes del mes:', this.canjes);
       },
       error: (error) => {
         console.error('Error al obtener los canjes del mes', error);

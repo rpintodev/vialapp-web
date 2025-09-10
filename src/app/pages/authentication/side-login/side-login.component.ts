@@ -50,8 +50,7 @@ export class AppSideLoginComponent implements OnInit {
           localStorage.setItem('token',response.data.session_token);
           localStorage.setItem('user',JSON.stringify(response.data))
           this.router.navigate(['/']);
-        } else {
-        }
+        } 
       });
       
     } else {

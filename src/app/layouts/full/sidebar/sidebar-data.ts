@@ -36,6 +36,12 @@ export const navItems: NavItem[] = [
         chipClass: 'bg-light-secondary text-secondary',
         route: RoutesService.ROUTES.RECAUDACION_VIAL.USUARIOS,
       },
+      {
+        displayName: 'App Settings',
+        iconName: 'settings',
+        route: RoutesService.ROUTES.SETTINGS.APP_SETTINGS,
+      },
+  
     ],
   },
 
@@ -58,13 +64,6 @@ export const navItems: NavItem[] = [
         route: RoutesService.ROUTES.REPORTS.LIQUIDATION,
       },
       {
-        displayName: 'Informe de bóveda',
-        iconName: 'file-invoice',
-        chip: true,
-        chipClass: 'bg-light-secondary text-secondary',
-        route: RoutesService.ROUTES.REPORTS.BOVEDA,
-      },
-      {
         displayName: 'Consolidado',
         iconName: 'file-invoice',
         chip: true,
@@ -82,10 +81,5 @@ export const navItems: NavItem[] = [
     iconName: 'user-scan',
     route: '',
   },
-  {
-    displayName: 'App Settings',
-    iconName: 'settings',
-    route: RoutesService.ROUTES.SETTINGS.APP_SETTINGS,
-  },
-  
+
 ];

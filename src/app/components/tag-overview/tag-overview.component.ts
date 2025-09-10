@@ -5,7 +5,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { ChartOptions } from 'src/app/utils/charts.utils';
 import { MovimientoService } from 'src/app/services/movimientos/movimiento.service';
-
+import { IMovimiento } from 'src/app/models/movimiento';
+import { calcularFaltante, calcularTotalRecibido } from 'src/app/utils/movimientos-utils';
+import { BovedaService } from 'src/app/services/boveda/boveda.service';
 
 @Component({
   selector: 'app-tag-overview',
@@ -20,14 +22,20 @@ import { MovimientoService } from 'src/app/services/movimientos/movimiento.servi
     styleUrls: ['./tag-overview.component.scss']
  })
 export class TagOverviewComponent implements OnInit {
-  saldoTags = 45230.50;
-  cantidadTags = 1250;
+  saldoTags :number;
+  cantidadTags : number;
+  movimientos: IMovimiento[] = [];
   tagsVendidos: number;
   selectedMonth = new Date().getMonth();
   currentMonth = '';
+  isLoadingData: boolean = true;
+
   public areaChartOptions: Partial<ChartOptions> | any;
   
-    constructor(private movimientoService:MovimientoService){}
+    constructor(
+      private movimientoService:MovimientoService,
+      private bovedaService: BovedaService,
+    ){}
 
   months = [
     { value: 0, name: 'Enero' },
@@ -139,34 +147,54 @@ export class TagOverviewComponent implements OnInit {
   }
 
   private loadData(){
+    this.isLoadingData = true;
     this.updateCurrentMonth();
+    this.getBovedaTag();
     this.getVentaTags();
-    this.generateRandomData();
   }
 
   updateCurrentMonth() {
     this.currentMonth = this.months[this.selectedMonth].name;
+
   }
 
   changeMonth() {
+    this.isLoadingData = true;
     this.updateCurrentMonth();
-    this.generateRandomData();
+    this.getVentaTags();
+  }
+
+  private getBovedaTag(){
+    this.bovedaService.getBovedaTag().subscribe((data) => {
+      this.saldoTags = parseFloat(data.total??'0') || 0;
+    }) 
   }
 
   private getVentaTags(){
-    this.movimientoService.getVentaTag(this.selectedMonth).subscribe((data) => {
-      console.log(data);
+    this.movimientoService.getVentaTag(this.selectedMonth+1).subscribe((data) => {
+      this.movimientos = data.map(item => ({
+        totalRecibido: calcularTotalRecibido(item),
+        fecha: item.Fecha,
+        ...item
+      }));
+      this.generateData();
+      this.isLoadingData = true;
+
     });
   }
 
-  generateRandomData() {
-    const daysInMonth = new Date(2024, this.selectedMonth + 1, 0).getDate();
+  generateData() {
+    const daysInMonth = new Date(new Date().getFullYear(), this.selectedMonth + 1, 0).getDate();
     const categories = [];
-    const data = [];
+    const data = []
 
     for (let i = 1; i <= daysInMonth; i++) {
       categories.push(i.toString());
-      data.push(Math.floor(Math.random() * 50) + 10); // Entre 1000 y 6000
+      const dailyTotal = this.movimientos
+        .filter(mov => new Date(mov.fecha ?? '').getDate() === i)
+        .map((mov) => parseInt(mov.totalRecibido ?? '0') || 0)
+        .reduce((sum, value) => sum + value, 0);
+      data.push(dailyTotal);
     }
 
     this.chartOptions = {

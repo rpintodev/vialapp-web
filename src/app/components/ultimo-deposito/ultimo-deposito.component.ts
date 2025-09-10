@@ -81,9 +81,7 @@ export class UltimoDepositoComponent implements OnInit, OnDestroy {
         console.error(message, error);
     }
 
-    private handleSuccess(data: IMovimiento[]): void {
-        console.log('Data recibida:', data);
-        
+    private handleSuccess(data: IMovimiento[]): void {        
         this.processDepositos(data);
         this.setUltimoDeposito();
         this.calculateMontos();
