@@ -32,12 +32,12 @@ export class BovedaSettingsComponent implements OnInit{
       backdrop: 'static'
     });
     modalRef.componentInstance.boveda = element;
+    modalRef.componentInstance.bovedaActualizada.subscribe(() => {
+      this.LoadData(); // <-- Aquí actualizas la tabla
+    });
     await modalRef.result;
   }
-  openTagModal(){
-
-  }
-
+ 
   private handleSuccess<T extends { total?: any }>(data: T, setter: (val: T) => void) {
   if (data && typeof data === 'object' && 'total' in data) {
     data.total = Number(data.total).toLocaleString('en-US', { minimumFractionDigits: 2 });
@@ -59,8 +59,12 @@ export class BovedaSettingsComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {
+  private LoadData(){
     this.getBovedaDetails();
     this.getBovedaTagDetails();
+  }
+
+  ngOnInit(): void {
+    this.LoadData();
   }
 }

@@ -1,10 +1,12 @@
 import { R } from '@angular/cdk/overlay.d-BdoMy0hX';
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TablerIconsModule } from 'angular-tabler-icons';
+import { ToastrService } from 'ngx-toastr';
 import { IMovimiento } from 'src/app/models/movimiento';
+import { MovimientoService } from 'src/app/services/movimientos/movimiento.service';
 
 @Component({
   selector: 'app-transactions-detail',
@@ -18,8 +20,13 @@ import { IMovimiento } from 'src/app/models/movimiento';
 export class TransactionsDetailComponent implements OnInit {
   @Input() transaccion: IMovimiento;
   formTransactionDetail!: FormGroup;
+  @Output() updateMovimientoEmitter = new EventEmitter<void>();
 
-  constructor(public modal: NgbActiveModal) {}
+  constructor(
+    public modal: NgbActiveModal,
+    public movimientoService: MovimientoService,
+    public toastr: ToastrService,
+  ) {}
 
   showDenominacionesAdicionales = false;
 
@@ -32,11 +39,8 @@ export class TransactionsDetailComponent implements OnInit {
     return control?.hasError(errorName) && control?.touched;
   }
 
-   private initForm(){
-        this.formTransactionDetail = new FormGroup({
-          via: new FormControl(this.transaccion?.via || '', [Validators.required, Validators.pattern('^[0-9]+$')]),
-          turno: new FormControl(this.transaccion?.turno || '', [Validators.required, Validators.pattern('^[0-9]+$')]),
-          estado: new FormControl(this.transaccion?.estado || '',[Validators.required, Validators.pattern('^[0-9]+$')]),
+  private initForm(){
+    this.formTransactionDetail = new FormGroup({
           recibe20d: new FormControl(this.transaccion?.recibe20d || '', [Validators.required, Validators.pattern('^[0-9]+$')]),
           recibe10d: new FormControl(this.transaccion?.recibe10d || '', [Validators.required, Validators.pattern('^[0-9]+$')]),
           recibe5d: new FormControl(this.transaccion?.recibe5d || '', [Validators.required, Validators.pattern('^[0-9]+$')]),
@@ -55,14 +59,41 @@ export class TransactionsDetailComponent implements OnInit {
           entrega10c: new FormControl(this.transaccion?.entrega10c || '', [Validators.required, Validators.pattern('^[0-9]+$')]),
           entrega5c: new FormControl(this.transaccion?.entrega5c || '', [Validators.required, Validators.pattern('^[0-9]+$')]),
           entrega1c: new FormControl(this.transaccion?.entrega1c || '', [Validators.required, Validators.pattern('^[0-9]+$')]),
-        });
-      }
+    });
+  }
     
-  validateForm(){
-
+  submit(){
+    if(this.formTransactionDetail.valid){
+      const updateTransaction = {
+        ...this.transaccion,
+        ...this.formTransactionDetail.value
+      }
+      this.updateMovimiento(updateTransaction);
+    }else{
+      this.formTransactionDetail.markAllAsTouched();
+    }
   }
 
+  private updateMovimiento(transaccion: IMovimiento){
+    this.movimientoService.updateTransaction(transaccion).subscribe({
+      next: () => {
+        this.handleSuccess();
+      },
+      error: (error) => {
+        console.error('Error al actualizar la transacción:', error);
+      }
+    });
+  }
+
+  private handleSuccess(){
+    this.toastr.success('Transacción actualizada con éxito', 'Éxito');
+    this.modal.close();
+    this.updateMovimientoEmitter.emit();
+  }
+  
   ngOnInit() {
     this.initForm();
+    console.log('Transaccion recibida en detalle:', this.transaccion);
   }
+
 }

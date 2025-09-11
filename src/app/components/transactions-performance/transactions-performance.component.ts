@@ -65,6 +65,7 @@ export class AppTransactionPerformanceComponent implements OnInit, AfterViewInit
         
     });
      modalRef.componentInstance.detalle = element;
+
   }
 
   openTransactionDetail(element: IMovimiento) {
@@ -76,6 +77,9 @@ export class AppTransactionPerformanceComponent implements OnInit, AfterViewInit
       backdrop: 'static',
     });
     modalRef.componentInstance.transaccion = element;
+    modalRef.componentInstance.updateMovimientoEmitter.subscribe(() => {
+      this.loadData();
+    });
   }
 
   getTiposMovimiento() {
@@ -106,18 +110,22 @@ export class AppTransactionPerformanceComponent implements OnInit, AfterViewInit
       });
   }
 
-  setTipoMovimientoSeleccionado(event: any) {
+  public setTipoMovimientoSeleccionado(event: any) {
     this.tipomovimientoSeleccionado = event.value.toString();
     this.getByDateAndTipoMovimiento(this.fechaSeleccionada.toString(), this.tipomovimientoSeleccionado);
   }
 
-  onFechaChange(event: any) {
+  public onFechaChange(event: any) {
     this.getByDateAndTipoMovimiento(event.value, this.tipomovimientoSeleccionado);
   }
 
-  ngOnInit(): void {
+  private loadData(){
     this.getTiposMovimiento();
     this.getByDateAndTipoMovimiento(this.fechaSeleccionada.toString(), this.tipomovimientoSeleccionado);
+  }
+  
+  ngOnInit(): void {
+    this.loadData();
   }
 
   ngAfterViewInit(): void {
@@ -126,4 +134,5 @@ export class AppTransactionPerformanceComponent implements OnInit, AfterViewInit
       this.dataSource.paginator = this.paginator;
     }
   }
+  
 }

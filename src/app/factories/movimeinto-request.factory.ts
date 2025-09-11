@@ -2,11 +2,14 @@
 import { Injectable } from '@angular/core';
 import { DateUtils } from '../utils/date.utils';
 import { MovimientoByDateRequest, CajerosLiquidadosRequest } from '../models/requests/moviemiento-requests';
+import { MovimientoMapper } from '../mappers/model.mapper';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovimientoRequestFactory {
+
+
   
   createByDateAndTipoRequest(fecha: string, idTipoMovimiento: string, idPeaje: string): MovimientoByDateRequest {
     const { inicio, fin } = DateUtils.createDateRange(fecha);
@@ -44,6 +47,13 @@ export class MovimientoRequestFactory {
     };
   }
 
+  createUpdateMovimientoRequest(movimiento: any): any {
+    const movimeintoMapped = MovimientoMapper.toDto(movimiento);
+    return {
+      ...movimeintoMapped
+    };
+
+  }
 
 
 }

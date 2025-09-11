@@ -6,6 +6,7 @@ import { IBoveda } from 'src/app/models/boveda';
 import { AuthService } from '../auth/auth.service';
 import { IUsuario } from 'src/app/models/usuario';
 import { BovedaMapper } from 'src/app/mappers/model.mapper';
+import { BovedaRequestFactory } from 'src/app/factories/boveda-request.factory';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class BovedaService {
   usuarioSession:IUsuario=this.authService.userData;
   constructor(private http: HttpClient) { }
 
+  private readonly requestFactory = inject(BovedaRequestFactory);
   private apiUrl = `${Environment.NODESERVER}api/boveda`;
   private ultimaBovedaSubject = new BehaviorSubject<IBoveda | null>(null);
 
@@ -48,6 +50,12 @@ export class BovedaService {
   public getBovedaTag():Observable<IBoveda>{
     const body = {id_peaje:this.userPeajeId};
     return this.http.post<any>(`${this.apiUrl}/getSecreBoveda`,body).pipe(map(reponse => BovedaMapper.fromDto(reponse[0])))
+  }
+
+  public updateBoveda(boveda:IBoveda):Observable<any>{
+    const body = this.requestFactory.createUpdateBovedaRequest(boveda);
+    console.log('Update Boveda Request Body:', body);
+    return this.http.post<any>(`${this.apiUrl}/editarBoveda`,body);
   }
 
 

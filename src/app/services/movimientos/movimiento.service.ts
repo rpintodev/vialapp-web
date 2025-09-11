@@ -70,4 +70,11 @@ export class MovimientoService {
       map((response) => response.map(MovimientoMapper.fromDto))
     );
   }
+
+  updateTransaction(movimiento: IMovimiento): Observable<any> {
+    const body = this.requestFactory.createUpdateMovimientoRequest(movimiento);
+    console.log('Update Movimiento Request Body:', body);
+    return this.http.post<any>(`${this.apiUrl}/updateApertura`, body);
+  }
+
 }

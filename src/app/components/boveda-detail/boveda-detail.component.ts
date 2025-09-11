@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Form, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { IBoveda } from 'src/app/models/boveda';
+import { ToastrService } from 'ngx-toastr';
+import { BovedaService } from 'src/app/services/boveda/boveda.service';
 
 @Component({
   selector: 'app-boveda-detail',
@@ -19,8 +21,13 @@ import { IBoveda } from 'src/app/models/boveda';
 export class BovedaDetailComponent implements OnInit {
   @Input() boveda: IBoveda;
   FormBovedaModify!: FormGroup
+  @Output() bovedaActualizada = new EventEmitter<void>();
+
   constructor(
     public modal: NgbActiveModal, 
+    public toastr: ToastrService, 
+    public bovedaService: BovedaService,
+    
   ) { }
 
   initForm(){
@@ -34,6 +41,7 @@ export class BovedaDetailComponent implements OnInit {
       moneda01: new FormControl(this.boveda.moneda01,[Validators.required,Validators.min(0), Validators.pattern('^[0-9]+$')]),
       moneda005: new FormControl(this.boveda.moneda005,[Validators.required,Validators.min(0), Validators.pattern('^[0-9]+$')]),
       moneda001: new FormControl(this.boveda.moneda001,[Validators.required,Validators.min(0), Validators.pattern('^[0-9]+$')]),
+      observacion: new FormControl(this.boveda.observacion,[]),
     });
   }
 
@@ -43,11 +51,32 @@ export class BovedaDetailComponent implements OnInit {
   }
 
   submit() {
-    // Handle form submission
+    if (this.FormBovedaModify.valid) {
+      const updatedBoveda: IBoveda = {
+        ...this.boveda,
+        ...this.FormBovedaModify.value
+      };
+      this.updateBoveda(updatedBoveda);
+    }else{
+      this.FormBovedaModify.markAllAsTouched();
+    }
+  }
+
+  private updateBoveda(boveda:IBoveda){
+    this.bovedaService.updateBoveda(boveda).subscribe({
+      next:()=>{ this.handleUpdateSucess(); },
+      error:(error)=>{ console.error('Error updating boveda details:', error)}
+    });
+  }
+
+  private handleUpdateSucess(){
+    this.toastr.success('Boveda actualiazada con éxito');
+    this.modal.close('updated');
+    this.bovedaActualizada.emit();
+
   }
 
   ngOnInit() {
     this.initForm();
-    console.log('Boveda Detail Component Initialized', this.boveda);
   }
 }

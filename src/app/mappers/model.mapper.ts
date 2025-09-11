@@ -49,6 +49,48 @@ export class MovimientoMapper {
       valorsimulaciones: d.ValorSimulaciones,
     };
   }
+  static toDto(d: IMovimiento): any {
+    return {
+      Id: d.id,
+      IdCajero: d.idCajero,
+      IdSupervisor: d.idSupervisor,
+      IdPeaje: d.idPeaje,
+      IdTurno: d.idturno,
+      IdTipoMovimiento: d.idTipoMovimiento,
+      Turno: d.turno,
+      Via: d.via,
+      NombreMovimiento: d.nombreMovimiento,
+      NombreCajero: d.nombreCajero,
+      NombreSupervisor: d.nombreSupervisor,
+      FirmaCajero: d.firmacajero,
+      FirmaSupervisor: d.firmasupervisor,
+      Fecha: d.fecha,
+      Recibe_1c: d.recibe1c,
+      Recibe_5c: d.recibe5c,
+      Recibe_10c: d.recibe10c,
+      Recibe_25c: d.recibe25c,
+      Recibe_50c: d.recibe50c,
+      Recibe_1d: d.recibe1d,
+      Recibe_10d: d.recibe10d,
+      Recibe_5d: d.recibe5d,
+      Recibe_20d: d.recibe20d,
+      Entrega_1c: d.entrega1c,
+      Entrega_5c: d.entrega5c,
+      Entrega_10c: d.entrega10c,
+      Entrega_25c: d.entrega25c,
+      Entrega_50c: d.entrega50c,
+      Entrega_1d: d.entrega1d,
+      Entrega_10d: d.entrega10d,
+      Entrega_5d: d.entrega5d,
+      Entrega_20d: d.entrega20d,
+      Simulaciones: d.simulaciones,
+      Sobrante: d.sobrante,
+      ParteTrabajo: d.partetrabajo,
+      Anulaciones: d.anulaciones,
+      ValorAnulaciones: d.valoranulaciones,
+      ValorSimulaciones: d.valorsimulaciones,
+    }
+  }
 }
 
 export class RolMapper {
@@ -144,6 +186,27 @@ export class BovedaMapper{
       observacion: d.Observacion,
       total: d.Total,
     
+    }
+  }
+  static toDto(d: IBoveda): any {
+    return {
+      Id: d.id,
+      Fecha: d.fecha,
+      EsActual: d.esactual,
+      IdPeaje: d.idpeaje,
+      Moneda_001: d.moneda001,
+      Moneda_005: d.moneda005,
+      Moneda_01: d.moneda01,
+      Moneda_025: d.moneda025,
+      Moneda_05: d.moneda05,
+      Moneda_1: d.moneda1,
+      Billete_1: d.billete1,
+      Billete_2: d.billete2,
+      Billete_5: d.billete5,
+      Billete_10: d.billete10,
+      Billete_20: d.billete20,
+      Observacion: d.observacion,
+      Total: d.total,
     }
   }
 }
