@@ -12,16 +12,14 @@ import { PeajeRequestFactory } from 'src/app/factories/peaje-request.factory';
 export class PeajeService {
   url=`${Environment.NODESERVER}api/peaje`
   http=inject(HttpClient);
-  constructor(private peajeRequestFactory: PeajeRequestFactory) { }
+  constructor() { }
 
   public getPeajes():Observable<any[]>{
     return this.http.get<any[]>(`${this.url}/getall`)
   }
 
   public updatePeaje():Observable<any[]>{
-    const request = this.peajeRequestFactory.updatePeajeRequest();
-    console.log('Request para actualizar peaje:', request);
-    return this.http.post<any[]>(`${this.url}/updatePeaje`, request)
+    return this.http.post<any[]>(`${this.url}/updatePeaje`, {})
   }
 
   

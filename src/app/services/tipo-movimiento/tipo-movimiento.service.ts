@@ -13,7 +13,6 @@ import { IUsuario } from 'src/app/models/usuario';
 export class TipoMovimientoService {
 
     authService = inject(AuthService);
-    usuarioSession:IUsuario=this.authService.userData;
     constructor(private http:HttpClient) { }
 
     private apiUrl=`${Environment.NODESERVER}api/tipomovimiento`;

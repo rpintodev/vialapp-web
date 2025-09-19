@@ -14,7 +14,6 @@ import { BovedaRequestFactory } from 'src/app/factories/boveda-request.factory';
 export class BovedaService {
   
   authService = inject(AuthService);
-  usuarioSession:IUsuario=this.authService.userData;
   constructor(private http: HttpClient) { }
 
   private readonly requestFactory = inject(BovedaRequestFactory);
@@ -23,10 +22,6 @@ export class BovedaService {
 
   ultimaBoveda$ = this.ultimaBovedaSubject.asObservable();
 
-  private get userPeajeId(): string {
-    return this.authService.userData.IdPeaje;
-  }
-  
   setUltimaBoveda(data: IBoveda) {
     this.ultimaBovedaSubject.next(data);
   }
@@ -37,19 +32,16 @@ export class BovedaService {
     const body = {
         fecha_inicio: fecha,
         fecha_fin: fechaFin,
-        id_peaje: this.usuarioSession.IdPeaje,
     }
     return this.http.post<{ data: any[] }>(`${this.apiUrl}/getBovedaByDate`,body);
   }
 
   public getBoveda():Observable<IBoveda>{
-    const body = {id_peaje:this.userPeajeId};
-    return this.http.post<any>(`${this.apiUrl}/getall`,body).pipe(map(reponse => BovedaMapper.fromDto(reponse[0])))
+    return this.http.get<any>(`${this.apiUrl}/getall`).pipe(map(reponse => BovedaMapper.fromDto(reponse[0])))
   }
 
   public getBovedaTag():Observable<IBoveda>{
-    const body = {id_peaje:this.userPeajeId};
-    return this.http.post<any>(`${this.apiUrl}/getSecreBoveda`,body).pipe(map(reponse => BovedaMapper.fromDto(reponse[0])))
+    return this.http.get<any>(`${this.apiUrl}/getSecreBoveda`).pipe(map(reponse => BovedaMapper.fromDto(reponse[0])))
   }
 
   public updateBoveda(boveda:IBoveda):Observable<any>{

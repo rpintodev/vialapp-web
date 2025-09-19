@@ -16,6 +16,8 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AppNavItemComponent } from './sidebar/nav-item/nav-item.component';
 import { navItems } from './sidebar/sidebar-data';
+import { NavItem } from './sidebar/nav-item/nav-item';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
@@ -39,8 +41,8 @@ const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
   encapsulation: ViewEncapsulation.None
 })
 export class FullComponent implements OnInit {
-  navItems = navItems;
-
+  navItems: NavItem[] = [];
+  
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav;
   resView = false;
@@ -52,6 +54,7 @@ export class FullComponent implements OnInit {
   private isContentWidthFixed = true;
   private isCollapsedWidthFixed = false;
   private htmlElement!: HTMLHtmlElement;
+    private subscription = new Subscription();
 
   get isOver(): boolean {
     return this.isMobileScreen;
@@ -62,6 +65,7 @@ export class FullComponent implements OnInit {
     private settings: CoreService,
     private router: Router,
     private breakpointObserver: BreakpointObserver,
+    private authService: AuthService,
   ) {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
@@ -86,10 +90,19 @@ export class FullComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void { }
+  ngOnInit( ): void {
+    this.subscription.add(
+      this.authService.getNavItems().subscribe(items => {
+        console.log('Sidebar recibió NavItems:', items);
+        this.navItems = items;
+      })
+    );
+   }
 
   ngOnDestroy() {
     this.layoutChangesSubscription.unsubscribe();
+    this.subscription.unsubscribe();
+
   }
 
   toggleCollapsed() {

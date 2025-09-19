@@ -2,11 +2,13 @@ import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { authGuard } from './core/auth-guard';
+import { loginGuard } from './core/login-guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: FullComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -15,8 +17,7 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard',              
-        canActivate: [authGuard],
-
+        
         loadChildren: () =>
           import('./pages/pages.routes').then((m) => m.PagesRoutes),
       },
@@ -52,6 +53,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'authentication',
+        canActivate: [loginGuard],
         loadChildren: () =>
           import('./pages/authentication/authentication.routes').then(
             (m) => m.AuthenticationRoutes

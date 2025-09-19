@@ -14,11 +14,8 @@ export class TurnoService {
 
   authService = inject(AuthService);
   private apiUrl = `${Environment.NODESERVER}api/turnos`;
-  
-  private get userPeajeId():string{
-    return this.authService.userData.IdPeaje;
-  }
 
+ 
   public updateTurno(turno:ITurno):Observable<any>{
     const body = {Turno: turno}
     console.log('Updating turno:', body);
@@ -26,8 +23,7 @@ export class TurnoService {
   }
 
   public getAll():Observable<ITurno[]>{
-    const body = {IdPeaje: this.userPeajeId}
-    return this.http.post<ITurno[]>(`${this.apiUrl}/getAllTurnos`, body).pipe(map(response => response.map(TurnoMapper.fromDto)));
+    return this.http.get<ITurno[]>(`${this.apiUrl}/getAllTurnos`).pipe(map(response => response.map(TurnoMapper.fromDto)));
   }
 
 }

@@ -40,26 +40,26 @@ export class HeaderComponent {
   @Output() toggleMobileNav = new EventEmitter<void>();
   @Input() sidebarOpen: boolean = false;
 
-  usuarioSession:IUsuario=this.authService.userData;
+  usuarioSession:IUsuario=this.authService.getUserInfo();
   nombre:string = `${this.usuarioSession.Nombre} ${this.usuarioSession.Apellido}`;
   peaje:string = this.usuarioSession.NombrePeaje;
 
   logOut(){
-    this.authService.logOut();
-    this.router.navigateByUrl('/authentication/login');
-  }
-
-  private removeAndAddSession(response:any):void{
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.setItem('token',response.data.session_token);
-    localStorage.setItem('user',JSON.stringify(response.data))
+    this.authService.logOut().subscribe({
+      next: () => {
+        this.toastr.success('Sesión cerrada!', 'Éxito', { timeOut: 3000 });
+        this.router.navigateByUrl('/authentication/login');
+      },
+      error: (err) => {
+        console.error('Error during logout:', err);
+        this.toastr.error('Error al cerrar sesión', 'Error', { timeOut: 3000 });
+      }
+    });
   }
 
  
 
   private handleSucess(response:any){
-        this.removeAndAddSession(response);
         window.location.reload();
         this.toastr.success('Peaje actualizado!', 'Éxito', { timeOut: 3000 });
   }

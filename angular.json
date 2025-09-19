@@ -69,7 +69,12 @@
             },
             "development": {
               "buildTarget": "Modernize:build:development"
+            },
+            "options": {
+              "host": "192.168.80.25",
+              "port": 4200
             }
+            
           },
           "defaultConfiguration": "development"
         },

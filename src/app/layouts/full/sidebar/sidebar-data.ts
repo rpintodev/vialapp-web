@@ -27,19 +27,19 @@ export const navItems: NavItem[] = [
         iconName: 'user-square',
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route: RoutesService.ROUTES.RECAUDACION_VIAL.ASIGNACION,
+        route: RoutesService.ROUTES.RECAUDACION_VIAL.ASIGNACION, ///recaudacion-vial/asignacion
       },
       {
         displayName: 'Usuarios',
         iconName: 'users-group',
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route: RoutesService.ROUTES.RECAUDACION_VIAL.USUARIOS,
+        route: RoutesService.ROUTES.RECAUDACION_VIAL.USUARIOS, ///recaudacion-vial/usuarios
       },
       {
         displayName: 'App Settings',
         iconName: 'settings',
-        route: RoutesService.ROUTES.SETTINGS.APP_SETTINGS,
+        route: RoutesService.ROUTES.SETTINGS.APP_SETTINGS, ///settings/app-settings
       },
   
     ],
@@ -61,14 +61,14 @@ export const navItems: NavItem[] = [
         iconName: 'file-invoice',
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route: RoutesService.ROUTES.REPORTS.LIQUIDATION,
+        route: RoutesService.ROUTES.REPORTS.LIQUIDATION, ///reports/liquidation-report
       },
       {
         displayName: 'Consolidado',
         iconName: 'file-invoice',
         chip: true,
         chipClass: 'bg-light-secondary text-secondary',
-        route: RoutesService.ROUTES.REPORTS.CONSOLIDATED,
+        route: RoutesService.ROUTES.REPORTS.CONSOLIDATED, ///reports/consolidated-report
       },
     ],
   },
