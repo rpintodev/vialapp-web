@@ -5,6 +5,7 @@ import {
   Input,
   ViewEncapsulation,
   inject,
+  OnInit,
 } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
@@ -28,7 +29,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './header.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 
   peajeService = inject(PeajeService)
   toastr = inject(ToastrService);
@@ -43,6 +44,10 @@ export class HeaderComponent {
   usuarioSession:IUsuario=this.authService.getUserInfo();
   nombre:string = `${this.usuarioSession.Nombre} ${this.usuarioSession.Apellido}`;
   peaje:string = this.usuarioSession.NombrePeaje;
+
+  ngOnInit(): void {
+    console.log('Usuario Session:', this.usuarioSession);
+  }
 
   logOut(){
     this.authService.logOut().subscribe({
@@ -69,6 +74,8 @@ export class HeaderComponent {
       if (response) {
         this.handleSucess(response);
       }
+    }, (error) => {
+      this.toastr.error('Error al actualizar peaje', 'Error', { timeOut: 3000 });
     });
   }
 

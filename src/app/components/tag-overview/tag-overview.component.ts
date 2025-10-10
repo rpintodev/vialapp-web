@@ -151,6 +151,7 @@ export class TagOverviewComponent implements OnInit {
     this.updateCurrentMonth();
     this.getBovedaTag();
     this.getVentaTags();
+    this.generateData();
   }
 
   updateCurrentMonth() {

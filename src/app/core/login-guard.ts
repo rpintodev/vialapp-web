@@ -9,9 +9,6 @@ export const loginGuard: CanActivateFn = (route, state) => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    console.log('LoginGuard: Verificando si ya está autenticado...');
-
-    // ✅ Verificar si ya tiene sesión activa
     return authService.checkAuthStatus().pipe(
         map(isAuthenticated => {
             if (isAuthenticated) {

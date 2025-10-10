@@ -3,6 +3,7 @@ import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { authGuard } from './core/auth-guard';
 import { loginGuard } from './core/login-guard';
+import { routePermissionsGuard } from './core/route-permissions';
 
 export const routes: Routes = [
   {
@@ -17,12 +18,12 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard',              
-        
         loadChildren: () =>
           import('./pages/pages.routes').then((m) => m.PagesRoutes),
       },
       {
         path: 'reports',
+        canActivate: [routePermissionsGuard],
         loadChildren: () =>
           import('./pages/reports/reports.routes').then(
             (m) => m.RerportsRoutes
@@ -30,6 +31,8 @@ export const routes: Routes = [
       },
       {
         path: 'recaudacion-vial',
+        canActivate: [routePermissionsGuard],
+
         loadChildren: () =>
           import('./pages/recaudacion-vial/recaudacion-vial.routes').then(
             (m) => m.RecaudacionVialRoutes
@@ -37,6 +40,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
+        canActivate: [routePermissionsGuard],
         loadChildren: () =>
           import('./pages/settings/settings.routes').then(
             (m) => m.SettingsRoutes

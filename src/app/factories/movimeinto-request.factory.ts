@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { DateUtils } from '../utils/date.utils';
 import { MovimientoMapper } from '../mappers/model.mapper';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class MovimientoRequestFactory {
   createCajerosLiquidadosRequest(fecha: string): any {
     const { inicio, fin } = DateUtils.createDateRange(fecha);
     return {
-      fecha_inicio: inicio,
-      fecha_fin: fin,
+      fecha_inicio: moment(inicio).format('YYYY-MM-DD 00:00:00'),
+      fecha_fin: moment(fin).format('YYYY-MM-DD 00:00:00'),
     };
   }
 

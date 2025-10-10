@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, take, tap } from 'rxjs';
 import { Environment } from 'src/app/environment/environment';
 import { UsuarioMapper } from 'src/app/mappers/model.mapper';
 import { IUsuario } from 'src/app/models/usuario';
@@ -97,6 +97,31 @@ export class AuthService {
   );
 }
 
+hasRouteAccess(route: string): Observable<boolean> {
+  console.log('Checking access for route:', this.allowedRoutes$);
+    return this.allowedRoutes$.pipe(take(1),
+      map(routes => {
+      if (!routes || routes.length === 0) {
+        console.log('No hay rutas cargadas');
+        return route === '/dashboard' || route === '/';
+      }
+
+      if (routes.includes(route)) {
+        console.log('Acceso exacto encontrado');
+        return true;
+      }
+        // Verificar patrones (ej: /recaudacion-vial/*)
+        return routes.some(allowedRoute => {
+          if (allowedRoute.endsWith('/*')) {
+            const baseRoute = allowedRoute.replace('/*', '');
+            return route.startsWith(baseRoute);
+          }
+          return false;
+        });
+      })
+    );
+  }
+
   private savePermissionsToStorage(navItems: NavItem[], allowedRoutes: string[]): void {
     try {
       const permissionsData = {
@@ -165,7 +190,13 @@ export class AuthService {
     return this.isAuthenticated();
   }
 
-  
+  checkRoleToChangePeaje(): Observable<boolean> {
+    return this.http.get<any>(`${this.apiUrlAuth}/check-role`).pipe(
+      tap(response =>{
+        console.log('Role check response:', response)
+      })
+    );
+  }
 
   
   checkAuthStatus(): Observable<boolean> {
@@ -201,6 +232,7 @@ export class AuthService {
     this.navItemsSubject.next([]);
     this.allowedRoutesSubject.next([]);
     localStorage.removeItem('user_navigation');
+    localStorage.removeItem('user');
   }
 
 

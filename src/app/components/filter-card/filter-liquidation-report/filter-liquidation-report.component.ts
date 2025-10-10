@@ -6,6 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { formatDate } from 'date-fns';
 import * as moment from 'moment';
 import { MovimientoMapper } from 'src/app/mappers/model.mapper';
 import { MaterialModule } from 'src/app/material.module';
@@ -52,7 +53,8 @@ export class FilterLiquidationReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCajerosLiquidados(this.fechaSeleccionada.toString());
+    const fechaInicia = new Date().toString();
+    this.getCajerosLiquidados(fechaInicia);
   }
 
   async generateReport(idTurno:string) {

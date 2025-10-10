@@ -26,6 +26,7 @@ export class MovimientoService {
 
   getCajerosliquidadosByDate(fecha: string): Observable<any[]> {
     const request = this.requestFactory.createCajerosLiquidadosRequest(fecha);
+    console.log('Request for getCajerosliquidadosByDate:', request);
     return this.http.post<any[]>(`${this.apiUrl}/getCajerosliquidadosByDate`, request);
   }
 
